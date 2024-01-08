@@ -7,17 +7,17 @@ resource "aws_placement_group" "this" {
 }
 
 resource "aws_autoscaling_group" "this" {
-  name                      = each.value.name
-  max_size                  = each.value.max_size
-  min_size                  = each.value.min_size
-  desired_capacity          = each.value.desired_capacity
-  health_check_grace_period = each.value.health_check_grace_period
-  health_check_type         = each.value.health_check_type
-  vpc_zone_identifier       = each.value.vpc_zone_identifier
-  force_delete              = each.value.force_delete
-  
-  placement_group           = aws_placement_group.this.id
-  capacity_rebalance        = true
+  name                      = format("%s-asg", var.name_prefix)
+  max_size                  = var.max_size
+  min_size                  = var.min_size
+  desired_capacity          = var.desired_capacity
+  health_check_grace_period = var.health_check_grace_period
+  health_check_type         = var.health_check_type
+  vpc_zone_identifier       = var.vpc_zone_identifier
+  force_delete              = var.force_delete
+
+  placement_group    = aws_placement_group.this.id
+  capacity_rebalance = true
 
   metrics_granularity = "1Minute"
   enabled_metrics = [
@@ -29,8 +29,8 @@ resource "aws_autoscaling_group" "this" {
   ]
 
   launch_template {
-    id      = var.launch_template_id      
-    version = var.launch_template_version
+    id      = aws_launch_template.this.id
+    version = aws_launch_template.this.latest_version
   }
 
   instance_maintenance_policy {
@@ -63,9 +63,8 @@ resource "aws_autoscaling_group" "this" {
 # AUTO SCALING POLICY
 #===============================================================================
 resource "aws_autoscaling_policy" "scaling_policy" {
-  count                  = length(var.aws_autoscaling_group)
-  autoscaling_group_name = aws_autoscaling_group.this[count.index].name
-  name                   = format("%s-%s", aws_autoscaling_group.this[count.index].name, "cpu-scaling-up-policy")
+  autoscaling_group_name = aws_autoscaling_group.this.name
+  name                   = format("%s-%s", aws_autoscaling_group.this.name, "cpu-scaling-up-policy")
   policy_type            = "StepScaling"
   adjustment_type        = "ChangeInCapacity"
 
@@ -88,7 +87,7 @@ data "aws_region" "current" {}
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
-  
+
   filter {
     name   = "name"
     values = [var.aws_ami_ids_name]
@@ -101,34 +100,41 @@ data "aws_ami" "amazon_linux" {
   }
 }
 
+resource "aws_key_pair" "key_name" {
+  key_name   = format("%s-key", var.name_prefix)
+  public_key = var.public_key
+}
+
 resource "aws_launch_template" "this" {
-  for_each = { for key, value in var.aws_launch_template : key => value }
-
-  iam_instance_profile {
-    arn = aws_iam_instance_profile.ecs_profile.arn
-  }
-
-  instance_type = each.value.instance_type
-  name_prefix   = each.value.name_prefix
-  key_name      = each.value.key_name
+  name_prefix   = var.name_prefix
+  instance_type = var.instance_type
+  key_name      = aws_key_pair.key_name.key_name
   image_id      = data.aws_ami.amazon_linux.image_id
+
   user_data = base64encode(templatefile("${path.module}/templates/ecs_userdata.sh.tpl", {
     AWS_REGION       = data.aws_region.current.name,
     ECS_CLUSTER_NAME = var.cluster_name
   }))
 
-  network_interfaces {
-    security_groups = each.value.security_groups
+  iam_instance_profile {
+    arn = aws_iam_instance_profile.ecs_profile.arn
   }
 
-  block_device_mappings {
-    device_name = each.value.ebs_block_device[each.key].device_name
+  network_interfaces {
+    security_groups = var.security_groups
+  }
 
-    ebs {
-      volume_size           = each.value.ebs_block_device[each.key].volume_size
-      volume_type           = each.value.ebs_block_device[each.key].volume_type
-      delete_on_termination = each.value.ebs_block_device[each.key].delete_on_termination
-      encrypted             = each.value.ebs_block_device[each.key].encrypted
+  dynamic "block_device_mappings" {
+    for_each = var.block_device_mappings
+    content {
+      device_name = block_device_mappings.value.device_name
+
+      ebs {
+        volume_size           = block_device_mappings.value.ebs.volume_size
+        volume_type           = block_device_mappings.value.ebs.volume_type
+        delete_on_termination = block_device_mappings.value.ebs.delete_on_termination
+        encrypted             = block_device_mappings.value.ebs.encrypted
+      }
     }
   }
 
@@ -221,5 +227,4 @@ data "aws_iam_policy_document" "workloads" {
 resource "aws_iam_role_policy" "attach_role_policy" {
   policy = data.aws_iam_policy_document.workloads.json
   role   = aws_iam_role.role.name
-
 }
