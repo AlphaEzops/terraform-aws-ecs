@@ -30,6 +30,13 @@ module "scaling" {
   aws_ami_ids_name    = ["amzn-ami-*-amazon-ecs-optimized"]
 }
 
+module "domain_name_server" {
+  source = "./modules/domain_name_server"
+
+  hostzone_exists = true              
+  domain_name     = "example.com"
+}
+
 # module "load_balancer" {
 #   source = "./modules/load_balancer"
 

@@ -3,37 +3,18 @@ variable "domain_name" {
   description = "value of domain name"
 }
 
-variable "record_name" {
-  type = string
-  description = "value of record name"
-}
-
-variable "loadbalancer_dns" {
-  type = list(string)
-  description = "value of load balancer dns"
-}
-
 variable "record_config" {
-  type = map(string)
-  description = "value of record config"
-}
-
-variable "common_tags" {
-  type = map(string)
-  description = "value of common tags"
-}
-
-variable "record_config" {
-  type = map(object({
-    name    = optional(string)
-    type    = optional(string)
-    ttl     = optional(number)
-    records = optional(list(string))
-  }))
+  type = map(any)
   description = "dns route53 record config"
- 
+  default = {
+    "name" = {
+      name = "value"
+      type = "CNAME"
+      records = [ "www.example.com" ]
+      ttl =  300
+    }
+  }
 }
-
 #===============================================================================
 # EXISTENT HOSTZONE
 #===============================================================================
@@ -43,7 +24,8 @@ variable "hostzone_exists" {
   default = false
 }
 
-variable "zone_id" {
-  type = string
-  description = "value of zone id"
+variable "common_tags" {
+  type = map(string)
+  description = "value of common tags"
+  default = {}
 }
