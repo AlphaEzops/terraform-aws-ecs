@@ -1,3 +1,6 @@
+# ==============================================================================
+# NETWORK | VPC - SUBNETS - ROUTE TABLES - INTERNET GATEWAY - NAT GATEWAY - VPN
+# ==============================================================================
 module "network" {
   source = "./modules/network"
 
@@ -8,6 +11,9 @@ module "network" {
   azs      = var.azs
 }
 
+# ==============================================================================
+# FIREWALL | SECURITY GROUPS
+# ==============================================================================
 module "firewall" {
   source = "./modules/firewall"
 
@@ -17,6 +23,9 @@ module "firewall" {
   vpc_cidr_block = module.network.vpc_cidr_block
 }
 
+# ==============================================================================
+# DNS | ROUTE 53 - CERTIFICATE MANAGER
+# ==============================================================================
 module "domain_name_server" {
   source = "./modules/domain_name_server"
 
@@ -36,6 +45,9 @@ module "load_balancer" {
   certificate_arn    = var.certificate_arn
 }
 
+# ==============================================================================
+# SCALING | AUTOSCALING GROUP - LAUNCH CONFIGURATION
+# ==============================================================================
 module "scaling" {
   source = "./modules/scaling"
 
@@ -49,6 +61,9 @@ module "scaling" {
   aws_ami_ids_name    = ["amzn-ami-*-amazon-ecs-optimized"]
 }
 
+# ==============================================================================
+# CLUSTER | ECS CLUSTER
+# ==============================================================================
 module "cluster" {
   source                = "./modules/cluster"
   name_prefix           = var.name_prefix
