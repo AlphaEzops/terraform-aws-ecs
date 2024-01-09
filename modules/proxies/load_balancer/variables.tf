@@ -73,6 +73,6 @@ variable "certificate_arn" {
 variable "ssl_policy" {
   type = string
   description = "value of ssl policy"
-  default = "ELBSecurityPolicy-2016-08"
+  default = "ELBSecurityPolicy-TLS-1-2-Ext-2018-06"
   
 }

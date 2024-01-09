@@ -1,4 +1,5 @@
 locals {
+  name_prefix = format("%s-%s", var.environment, var.name_prefix)
   execute_command_configuration = {
     logging = "OVERRIDE"
     log_configuration = {
@@ -14,7 +15,7 @@ locals {
 resource "aws_cloudwatch_log_group" "this" {
   count = var.create && var.create_cloudwatch_log_group ? 1 : 0
 
-  name              = "/aws/ecs/${var.cluster_name}"
+  name              = "/aws/ecs/${aws_ecs_cluster.cluster.name}"
   retention_in_days = var.cloudwatch_log_group_retention_in_days
   kms_key_id        = var.cloudwatch_log_group_kms_key_id
 
@@ -27,7 +28,7 @@ resource "aws_cloudwatch_log_group" "this" {
 # ECS Cluster
 ################################################################################
 resource "aws_ecs_cluster" "cluster" {
-  name = var.cluster_name
+  name = format("%s-%s-ecs", var.name_prefix, var.environment)
 
   configuration {
     execute_command_configuration {
@@ -87,7 +88,7 @@ resource "aws_ecs_capacity_provider" "ecs_cluster_capacity_providers" {
 data "aws_partition" "current" {}
 
 locals {
-  task_exec_iam_role_name = try(coalesce(var.task_exec_iam_role_name, var.cluster_name), "")
+  task_exec_iam_role_name = try(coalesce(var.task_exec_iam_role_name, aws_ecs_cluster.cluster.name), "")
 
   create_task_exec_iam_role = var.create && var.create_task_exec_iam_role
   create_task_exec_policy   = local.create_task_exec_iam_role && var.create_task_exec_policy
@@ -113,7 +114,7 @@ resource "aws_iam_role" "task_exec" {
   name        = var.task_exec_iam_role_use_name_prefix ? null : local.task_exec_iam_role_name
   name_prefix = var.task_exec_iam_role_use_name_prefix ? "${local.task_exec_iam_role_name}-" : null
   path        = var.task_exec_iam_role_path
-  description = coalesce(var.task_exec_iam_role_description, "Task execution role for ${var.cluster_name}")
+  description = coalesce(var.task_exec_iam_role_description, "Task execution role for ${local.name_prefix}")
 
   assume_role_policy    = data.aws_iam_policy_document.task_exec_assume[0].json
   permissions_boundary  = var.task_exec_iam_role_permissions_boundary

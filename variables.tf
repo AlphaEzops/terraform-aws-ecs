@@ -1,46 +1,52 @@
-variable "cluster_name" {
-  type = string
-  description = "The name of the ECS cluster"
-  default = "demo"
-}
-
+#==============================================================================
+# GENERAL
+#==============================================================================
 variable "name_prefix" {
-  type = string
+  type        = string
   description = "The prefix for all resources"
-  default = "test"
+  default     = "test"
 }
 
 variable "environment" {
-  type = string
+  type        = string
   description = "The environment for all resources"
-  default = "dev"
+  default     = "dev"
+}
+
+#==============================================================================
+# SCALING
+#==============================================================================
+variable "certificate_arn" {
+  type        = string
+  description = "The name of the load balancer"
+  default     = ""
 }
 
 #==============================================================================
 # NETWORK
 #==============================================================================
 variable "vpc_name" {
-  type = string
+  type        = string
   description = "The name of the VPC connection"
-  default = "ecs"
+  default     = "ecs"
 }
 
 variable "vpc_cidr" {
-  type = string
+  type        = string
   description = "The CIDR block for the VPC"
-  default = "10.0.0.0/16"
+  default     = "10.0.0.0/16"
 }
 
 variable "azs" {
-  type = number
+  type        = number
   description = "The availability zones for the VPC"
-  default = 2
+  default     = 2
 }
 #==============================================================================
 # LAUNCH TEMPLATE
 #==============================================================================
 variable "public_key" {
-  type = string
+  type        = string
   description = "The public key to install on the instance."
 }
 

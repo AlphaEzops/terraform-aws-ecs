@@ -1,3 +1,6 @@
+locals {
+  name_prefix = format("%s-%s", var.environment, var.name_prefix)
+}
 #===============================================================================
 # AUTO SCALING GROUP
 #===============================================================================
@@ -90,12 +93,11 @@ data "aws_ami" "amazon_linux" {
 
   filter {
     name   = "name"
-    values = [var.aws_ami_ids_name]
+    values = var.aws_ami_ids_name
   }
 
   filter {
     name = "owner-alias"
-
     values = ["amazon"]
   }
 }
@@ -118,6 +120,10 @@ resource "aws_launch_template" "this" {
 
   iam_instance_profile {
     arn = aws_iam_instance_profile.ecs_profile.arn
+  }
+
+  monitoring {
+    enabled = true
   }
 
   network_interfaces {
@@ -183,7 +189,7 @@ data "aws_iam_policy_document" "assume_role" {
 
     principals {
       type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
+      identifiers = ["ec2.amazonaws.com", "ecs.amazonaws.com"]
     }
     actions = ["sts:AssumeRole"]
 

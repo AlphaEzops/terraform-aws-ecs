@@ -3,6 +3,11 @@ variable "name_prefix" {
   default = "ecs"
 }
 
+variable "environment" {
+  type = string
+  description = "The environment for all resources"
+  default = "dev"
+}
 #===============================================================================
 # AUTOSCALING GROUP
 #===============================================================================
@@ -56,8 +61,9 @@ variable "force_delete" {
  }
 
 variable "aws_ami_ids_name" {
-  type        = string
+  type        = list(string)
   description = "The name of the AMI (provided during image creation)."
+  default = ["amzn-ami-*-amazon-ecs-optimized"]
 }
 
 variable "security_groups" {

@@ -1,3 +1,18 @@
+################################################################################
+# GENERAL
+################################################################################
+variable "name_prefix" {
+  type = string
+  description = "The prefix for all resources"
+  default = "test"
+}
+
+variable "environment" {
+  type = string
+  description = "The environment for all resources"
+  default = "dev"
+}
+
 variable "create" {
   description = "Determines whether resources will be created (affects all resources)"
   type        = bool
@@ -13,12 +28,6 @@ variable "tags" {
 ################################################################################################
 # CLUSTER
 ################################################################################################
-
-variable "cluster_name" {
-  description = "Name of the cluster"
-  type        = string
-}
-
 variable "container_insights" {
   description = "Enable container insights for the cluster"
   type        = string
@@ -148,3 +157,4 @@ variable "task_exec_iam_statements" {
   type        = any
   default     = {}
 }
+
