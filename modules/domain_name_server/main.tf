@@ -1,18 +1,22 @@
 #===============================================================================
-# AWS ROUTE53
+# AWS ROUTE53 - HOSTZONE
 #===============================================================================
 data "aws_route53_zone" "this" {
     count = var.hostzone_exists ? 1 : 0
     
-    name = var.zone_name
+    name = var.domain_name
     zone_id = var.zone_id
 }
 
 resource "aws_route53_zone" "this" {
     count = var.hostzone_exists ? 0 : 1
-    name = var.zone_name
+    name = var.domain_name
+    
+    tags = var.common_tags
 }
-
+#===============================================================================
+# ALL RECORDS
+#===============================================================================
 resource "aws_route53_record" "this" {
     count = length(var.record_config)
 
@@ -24,9 +28,8 @@ resource "aws_route53_record" "this" {
 }
 
 #===============================================================================
-# AWS CERTIFICATE MANAGER - 
+# ALB CERTIFICATE VALIDATION RECORD ON ROUTE53
 #===============================================================================
-# ERROR - CICLE DEPENDENCY
 resource "aws_acm_certificate" "alb_certificate" {
   domain_name               = var.domain_name
   validation_method         = "DNS"
@@ -35,13 +38,12 @@ resource "aws_acm_certificate" "alb_certificate" {
 
 
 resource "aws_route53_record" "generic_certificate_validation" {
+  zone_id = var.hostzone_exists ? data.aws_route53_zone.this[0].zone_id : aws_route53_zone.this[0].zone_id
   name    = tolist(aws_acm_certificate.alb_certificate.domain_validation_options)[0].resource_record_name
   type    = tolist(aws_acm_certificate.alb_certificate.domain_validation_options)[0].resource_record_type
-  zone_id = aws_route53_zone.this.id
   records = [tolist(aws_acm_certificate.alb_certificate.domain_validation_options)[0].resource_record_value]
   ttl     = 300
 }
-
 
 resource "aws_acm_certificate_validation" "alb_certificate" {
   certificate_arn         = aws_acm_certificate.alb_certificate.arn

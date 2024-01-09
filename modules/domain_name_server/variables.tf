@@ -1,4 +1,4 @@
-variable "zone_name" {
+variable "domain_name" {
   type = string
   description = "value of domain name"
 }
