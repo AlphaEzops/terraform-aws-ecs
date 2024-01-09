@@ -17,6 +17,25 @@ module "firewall" {
   vpc_cidr_block = module.network.vpc_cidr_block
 }
 
+module "domain_name_server" {
+  source = "./modules/domain_name_server"
+
+  hostzone_exists = true              
+  domain_name     = "example.com"
+}
+
+module "load_balancer" {
+  source = "./modules/proxies/load_balancer"
+
+  name_prefix = var.name_prefix
+  environment = var.environment
+
+  vpc_id             = module.network.vpc_id
+  subnets_id         = module.network.public_subnets
+  security_groups_id = module.firewall.security_group_id
+  certificate_arn    = var.certificate_arn
+}
+
 module "scaling" {
   source = "./modules/scaling"
 
@@ -29,44 +48,6 @@ module "scaling" {
   public_key          = var.public_key
   aws_ami_ids_name    = ["amzn-ami-*-amazon-ecs-optimized"]
 }
-
-module "domain_name_server" {
-  source = "./modules/domain_name_server"
-
-  hostzone_exists = true              
-  domain_name     = "example.com"
-}
-
-# module "load_balancer" {
-#   source = "./modules/load_balancer"
-
-#   name_prefix = var.name_prefix
-#   environment = var.environment
-
-#   vpc_id             = module.network.vpc_id
-#   subnets_id         = module.network.public_subnets
-#   security_groups_id = module.firewall.security_group_id
-#   certificate_arn    = var.certificate_arn
-# }
-
-# module "dns" {
-#   source = "./modules/dns"
-
-#   name_prefix = var.name_prefix
-#   environment = var.environment
-
-#   zone_name = var.zone_name
-#   zone_id   = var.zone_id
-
-#   record_config = [
-#     {
-#       name    = "www"
-#       type    = "CNAME"
-#       ttl     = 300
-#       records = ["www.example.com"]
-#     },
-#   ]
-# }
 
 module "cluster" {
   source                = "./modules/cluster"

@@ -74,5 +74,10 @@ variable "ssl_policy" {
   type = string
   description = "value of ssl policy"
   default = "ELBSecurityPolicy-TLS-1-2-Ext-2018-06"
-  
+}
+
+variable "environment" {
+  type = string
+  description = "The environment for all resources"
+  default = "dev"
 }

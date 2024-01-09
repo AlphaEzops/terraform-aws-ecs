@@ -1,9 +1,12 @@
+locals {
+  name_prefix = "${var.name_prefix}-${var.environment}"
+}
 #===============================================================================
 # LOAD BALANCER
 #===============================================================================
 resource "aws_lb" "this" {
   count                      = var.enabled ? 1 : 0
-  name                       = format("%-elb", var.name_prefix)
+  name                       = format("%-elb", local.name_prefix)
   internal                   = var.internal
   load_balancer_type         = var.load_balancer_type
   security_groups            = var.security_groups_id
@@ -33,7 +36,7 @@ resource "aws_lb" "this" {
 # LOAD BALANCER TARGET GROUP HTTP
 #===============================================================================
 resource "aws_lb_target_group" "http" {
-  name        = format("%s-http-tg", var.name_prefix)
+  name        = format("%s-http-tg", local.name_prefix)
   port        = 80
   protocol    = "HTTP"
   target_type = "ip"
@@ -74,7 +77,7 @@ resource "aws_lb_listener" "http" {
 # LOAD BALANCER TARGET GROUP HTTPS
 #===============================================================================
 resource "aws_lb_target_group" "https" {
-  name        = format("%-https-tg", var.name_prefix)
+  name        = format("%-https-tg", local.name_prefix)
   port        = 443
   protocol    = "HTTPS"
   target_type = "ip"
