@@ -26,7 +26,6 @@ resource "aws_route53_record" "this" {
     ttl     = try(var.record_config[count.index].ttl, 300)
     records = try(var.record_config[count.index].records, ["www.example.com"])
 }
-
 #===============================================================================
 # ALB CERTIFICATE VALIDATION RECORD ON ROUTE53
 #===============================================================================
@@ -35,7 +34,6 @@ resource "aws_acm_certificate" "alb_certificate" {
   validation_method         = "DNS"
   subject_alternative_names = ["*.${var.domain_name}"]
 }
-
 
 resource "aws_route53_record" "generic_certificate_validation" {
   zone_id = var.hostzone_exists ? data.aws_route53_zone.this[0].zone_id : aws_route53_zone.this[0].zone_id
