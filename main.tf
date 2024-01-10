@@ -33,6 +33,9 @@ module "domain_name_server" {
   domain_name     = "example.com"
 }
 
+# ==============================================================================
+# PROXIES | LOAD BALANCER - TARGET GROUP - LISTENER - RULES
+# ==============================================================================
 module "load_balancer" {
   source = "./modules/proxies/load_balancer"
 
