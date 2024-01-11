@@ -10,6 +10,7 @@ variable "existent_hostzone_name" {
 variable "hostzone_name" {
   type        = string
   description = "value of hostzone name"
+  default     = null
 }
 
 variable "common_tags" {
@@ -43,4 +44,5 @@ variable "existent_acm_domain_name" {
 variable "acm_domain_name" {
   type        = string
   description = "value of acm domain name"
+  default     = null
 }

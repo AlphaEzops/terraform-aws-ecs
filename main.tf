@@ -25,10 +25,9 @@ module "firewall" {
 # DNS | ROUTE 53 - CERTIFICATE MANAGER
 # ==============================================================================
 module "domain_name_server" {
-  source = "./modules/domain_name_server"
-
-  hostzone_exists = true
-  hostzone_name     = "dev.ezops.com.br"
+  source                   = "./modules/domain_name_server"
+  existent_acm_domain_name = "dev.ezops.com.br"
+  existent_hostzone_name   = "dev.ezops.com.br"
 }
 
 # ==============================================================================
@@ -42,7 +41,7 @@ module "load_balancer" {
   vpc_id             = module.network.vpc_id
   subnets_id         = module.network.public_subnets
   security_groups_id = module.firewall.security_group_id
-  certificate_arn    = var.certificate_arn
+  certificate_arn    = module.domain_name_server.certificate_arn
 }
 
 # ==============================================================================
