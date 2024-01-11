@@ -1,16 +1,16 @@
 output "domain_name_server" {
   description = "The name servers for the domain"
-  value       = var.hostzone_exists ? data.aws_route53_zone.this[0].name_servers : aws_route53_zone.this[0].name_servers
+  value       = var.existent_hostzone_name != null ? data.aws_route53_zone.this[0].name_servers : aws_route53_zone.this[0].name_servers
 }
 
 output "domain_name" {
   description = "The name of the domain"
-  value       = var.hostzone_exists ? data.aws_route53_zone.this[0].name : aws_route53_zone.this[0].name
+  value       = var.existent_hostzone_name != null ? data.aws_route53_zone.this[0].name : aws_route53_zone.this[0].name
 }
 
 output "domain_id" {
   description = "The ID of the domain"
-  value       = var.hostzone_exists ? data.aws_route53_zone.this[0].zone_id : aws_route53_zone.this[0].zone_id
+  value       = var.existent_hostzone_name != null ? data.aws_route53_zone.this[0].zone_id : aws_route53_zone.this[0].zone_id
 }
 
 output "certificate_arn" {
