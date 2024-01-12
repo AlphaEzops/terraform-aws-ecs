@@ -25,7 +25,7 @@ module "firewall" {
 # DNS | ROUTE 53 - CERTIFICATE MANAGER
 # ==============================================================================
 module "domain_name_server" {
-  source                   = "./modules/domain_name_server"
+  source = "./modules/domain_name_server"
 
   existent_acm_domain_name = "dev.ezops.com.br"
   existent_hostzone_name   = "dev.ezops.com.br"
@@ -64,8 +64,8 @@ module "scaling" {
 # CLUSTER | ECS CLUSTER
 # ==============================================================================
 module "cluster" {
-  source                = "./modules/cluster"
-  
+  source = "./modules/cluster"
+
   name_prefix           = var.name_prefix
   environment           = var.environment
   autoscaling_group_arn = module.scaling.autoscaling_group_arn
