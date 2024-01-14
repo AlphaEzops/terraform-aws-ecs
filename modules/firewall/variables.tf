@@ -10,6 +10,11 @@ variable "environment" {
   default = "dev"
 }
 
+variable "vpc_id" {
+  type = string
+  description = "The VPC ID"
+}
+
 variable "vpc_cidr_block" {
   type = string
   description = "The CIDR block for the VPC"

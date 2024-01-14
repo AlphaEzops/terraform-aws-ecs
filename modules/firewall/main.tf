@@ -11,7 +11,7 @@ module "load_balancer_sg" {
 
   name        = format("%s-lb-sg", local.name_prefix)
   description = "Security group for ALB"
-  vpc_id      = var.vpc_cidr_block
+  vpc_id      = var.vpc_id
 
   ingress_cidr_blocks = ["0.0.0.0/0"]
   ingress_rules       = ["https-443-tcp", "http-80-tcp"]
@@ -28,7 +28,7 @@ module "bastion_sg" {
 
   name        = format("%s-bastion-sg", local.name_prefix)
   description = "Security group for BASTION"
-  vpc_id      = var.vpc_cidr_block
+  vpc_id      = var.vpc_id
 
   # ingress_cidr_blocks = ["0.0.0.0/0"]
   ingress_with_cidr_blocks = [
@@ -53,10 +53,10 @@ module "ecs_sg" {
 
   name        = format("%s-ecs-sg", local.name_prefix)
   description = "Security group for ECS"
-  vpc_id      = var.vpc_cidr_block
+  vpc_id      = var.vpc_id
+  ingress_cidr_blocks = [var.vpc_cidr_block]
 
-
-  ingress_with_source_security_group_id = [
+  computed_ingress_with_source_security_group_id = [
     {
       description              = "Allow ingress traffic from ALB on HTTP on ephemeral ports"
       from_port                = 32768 #1024
@@ -70,7 +70,6 @@ module "ecs_sg" {
       to_port           = 22
       protocol          = "tcp"
       security_group_id = module.bastion_sg.security_group_id
-
     }
   ]
 

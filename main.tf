@@ -18,6 +18,7 @@ module "firewall" {
 
   name_prefix    = var.name_prefix
   environment    = var.environment
+  vpc_id         = module.network.vpc_id
   vpc_cidr_block = module.network.vpc_cidr_block
 }
 
