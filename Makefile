@@ -1,7 +1,7 @@
 # Variables
-TF_DIR := ./
+TF_DIR := ./terraform
 PLAN_OUTPUT := plan.out
-VAR_DIR := ./vars
+VAR_DIR := ../vars
 ENVIRONMENT := dev
 
 init:
@@ -15,5 +15,3 @@ apply:
 
 destroy:
 	cd $(TF_DIR) && terraform destroy -var-file=$(VAR_DIR)/$(ENVIRONMENT).tfvars
-
-
