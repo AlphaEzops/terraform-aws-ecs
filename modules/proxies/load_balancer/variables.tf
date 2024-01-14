@@ -11,8 +11,8 @@ variable "name_prefix" {
 }
 
 variable "access_logs" {
-  type = map(string)
-  default = {}
+  type = map(any)
+  default = null
   description = "value of access logs"
 }
 

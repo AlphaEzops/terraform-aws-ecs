@@ -6,7 +6,7 @@ locals {
 #===============================================================================
 resource "aws_lb" "this" {
   count                      = var.enabled ? 1 : 0
-  name                       = format("%-elb", local.name_prefix)
+  name                       = format("%s-elb", local.name_prefix)
   internal                   = var.internal
   load_balancer_type         = var.load_balancer_type
   security_groups            = var.security_groups_id
@@ -77,7 +77,7 @@ resource "aws_lb_listener" "http" {
 # LOAD BALANCER TARGET GROUP HTTPS
 #===============================================================================
 resource "aws_lb_target_group" "https" {
-  name        = format("%-https-tg", local.name_prefix)
+  name        = format("%s-https-tg", local.name_prefix)
   port        = 443
   protocol    = "HTTPS"
   target_type = "ip"

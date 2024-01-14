@@ -18,7 +18,7 @@ module "firewall" {
 
   name_prefix    = var.name_prefix
   environment    = var.environment
-  vpc_id         = module.network.vpc_id
+  vpc_id         = module.network.vpc_name
   vpc_cidr_block = module.network.vpc_cidr_block
 }
 
@@ -40,7 +40,7 @@ module "load_balancer" {
 
   name_prefix        = var.name_prefix
   environment        = var.environment
-  vpc_id             = module.network.vpc_id
+  vpc_id             = module.network.vpc_name
   subnets_id         = module.network.public_subnets
   security_groups_id = module.firewall.load_balancer_sg_id
   certificate_arn    = module.domain_name_server.existent_certificate_arn
