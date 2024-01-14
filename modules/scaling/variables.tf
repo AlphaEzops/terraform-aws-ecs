@@ -83,17 +83,32 @@ variable "instance_type" {
 }
 
 variable "block_device_mappings" {
-  type = map(any)
+  type = list(any)
   description = "The user data to provide when launching the instance."
-  default = {
-    device_name = "/dev/xvda"
-    ebs = {
-      volume_size = 8
-      volume_type = "gp2"
-      delete_on_termination = true
+  default = [
+    {
+      device_name = "/dev/xvda"
+      ebs = {
+        volume_size = 8
+        volume_type = "gp2"
+        delete_on_termination = true
+      }
     }
-  }
+  ]
 }
+
+# variable "block_device_mappings" {
+#   type = map(any)
+#   description = "The user data to provide when launching the instance."
+#   default = {
+#     device_name = "/dev/xvda"
+#     ebs = {
+#       volume_size = 8
+#       volume_type = "gp2"
+#       delete_on_termination = true
+#     }
+#   }
+# }
 
 variable "tags_specifications" {
   description = "The name of the resource."

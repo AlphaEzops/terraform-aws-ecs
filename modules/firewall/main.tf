@@ -6,7 +6,7 @@ locals {
 # LOAD BALANCER SECURITY GROUP
 #===============================================================================
 module "load_balancer_sg" {
-   source  = "terraform-aws-modules/security-group/aws"
+  source  = "terraform-aws-modules/security-group/aws"
   version = "5.1.0"
 
   name        = format("%s-lb-sg", local.name_prefix)
@@ -23,30 +23,21 @@ module "load_balancer_sg" {
 # BASTION SECURITY GROUP
 #===============================================================================
 module "bastion_sg" {
-   source  = "terraform-aws-modules/security-group/aws"
+  source  = "terraform-aws-modules/security-group/aws"
   version = "5.1.0"
 
   name        = format("%s-bastion-sg", local.name_prefix)
   description = "Security group for BASTION"
   vpc_id      = var.vpc_cidr_block
 
-  ingress_cidr_blocks = [
+  # ingress_cidr_blocks = ["0.0.0.0/0"]
+  ingress_with_cidr_blocks = [
     {
-      description              = "Allow ingress traffic from ALB on HTTP on ephemeral ports"
-      from_port                = 22
-      to_port                  = 22
-      protocol                 = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-  ]
-
-  egress_cidr_blocks = [
-    {
-      description = "Allow all outbound traffic"
-      from_port   = 0
-      to_port     = 0
-      protocol    = -1
-      cidr_blocks = ["0.0.0.0/0"]
+      description = "Allow ingress traffic from ALB on HTTP on ephemeral ports"
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+      cidr_blocks = "0.0.0.0/0"
     }
   ]
 
@@ -57,15 +48,15 @@ module "bastion_sg" {
 # ECS SECURITY GROUP
 #===============================================================================
 module "ecs_sg" {
-   source  = "terraform-aws-modules/security-group/aws"
+  source  = "terraform-aws-modules/security-group/aws"
   version = "5.1.0"
 
   name        = format("%s-ecs-sg", local.name_prefix)
   description = "Security group for ECS"
   vpc_id      = var.vpc_cidr_block
-  
 
-   ingress_with_source_security_group_id = [
+
+  ingress_with_source_security_group_id = [
     {
       description              = "Allow ingress traffic from ALB on HTTP on ephemeral ports"
       from_port                = 32768 #1024
@@ -74,20 +65,12 @@ module "ecs_sg" {
       source_security_group_id = module.load_balancer_sg.security_group_id
     },
     {
-      description = "Allow SSH ingress traffic from bastion host"
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
+      description       = "Allow SSH ingress traffic from bastion host"
+      from_port         = 22
+      to_port           = 22
+      protocol          = "tcp"
       security_group_id = module.bastion_sg.security_group_id
 
-    }
-  ]
-
-  egress_cidr_blocks = [
-    {
-      rule        = "all-all"
-      description = "Allow all egress traffic"
-      cidr_blocks = [var.vpc_cidr_block]
     }
   ]
 
