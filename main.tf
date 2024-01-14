@@ -27,8 +27,8 @@ module "firewall" {
 module "domain_name_server" {
   source = "./modules/domain_name_server"
 
-  existent_acm_domain_name = "dev.ezops.com.br"
   existent_hostzone_name   = "dev.ezops.com.br"
+  existent_acm_domain_name = "*.dev.ezops.com.br"
 }
 
 # ==============================================================================
@@ -42,7 +42,7 @@ module "load_balancer" {
   vpc_id             = module.network.vpc_id
   subnets_id         = module.network.public_subnets
   security_groups_id = module.firewall.load_balancer_sg_id
-  certificate_arn    = module.domain_name_server.certificate_arn
+  certificate_arn    = module.domain_name_server.existent_certificate_arn
 }
 
 # ==============================================================================
