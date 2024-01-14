@@ -4,7 +4,6 @@ PLAN_OUTPUT := plan.out
 VAR_DIR := ./vars
 ENVIRONMENT := dev
 
-# Targets
 init:
 	cd $(TF_DIR) && terraform init
 

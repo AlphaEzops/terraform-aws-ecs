@@ -28,8 +28,8 @@ module "firewall" {
 module "domain_name_server" {
   source = "./modules/domain_name_server"
 
-  existent_hostzone_name   = "dev.ezops.com.br"
-  existent_acm_domain_name = "*.dev.ezops.com.br"
+  existent_hostzone_name   = var.existent_hostzone_name 
+  existent_acm_domain_name = var.existent_acm_domain_name
 }
 
 # ==============================================================================

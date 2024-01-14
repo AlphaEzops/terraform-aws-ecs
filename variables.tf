@@ -16,10 +16,9 @@ variable "environment" {
 #==============================================================================
 # SCALING
 #==============================================================================
-variable "certificate_arn" {
+variable "public_key" {
   type        = string
-  description = "The name of the load balancer"
-  default     = ""
+  description = "The public key to install on the instance."
 }
 
 #==============================================================================
@@ -43,11 +42,17 @@ variable "azs" {
   default     = 2
 }
 #==============================================================================
-# LAUNCH TEMPLATE
+# DNS
 #==============================================================================
-variable "public_key" {
+
+variable "existent_hostzone_name" {
   type        = string
-  description = "The public key to install on the instance."
+  description = "The name of the existent hostzone"
+}
+
+variable "existent_acm_domain_name" {
+  type        = string
+  description = "The name of the existent certificate"
 }
 
 
