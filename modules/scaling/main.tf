@@ -48,7 +48,7 @@ resource "aws_autoscaling_group" "this" {
   }
 
   dynamic "tag" {
-    for_each = var.extra_tags ? [true] : []
+    for_each = var.extra_tags != [] ? var.extra_tags : []
     content {
       key                 = tag.value.key
       propagate_at_launch = tag.value.propagate_at_launch
