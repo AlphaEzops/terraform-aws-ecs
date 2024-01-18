@@ -18,7 +18,7 @@ module "firewall" {
 
   name_prefix    = var.name_prefix
   environment    = var.environment
-  vpc_id         = module.network.vpc_name
+  vpc_id         = module.network.vpc_id
   vpc_cidr_block = module.network.vpc_cidr_block
 }
 
@@ -40,9 +40,9 @@ module "load_balancer" {
 
   name_prefix        = var.name_prefix
   environment        = var.environment
-  vpc_id             = module.network.vpc_name
+  vpc_id             = module.network.vpc_id
   subnets_id         = module.network.public_subnets
-  security_groups_id = module.firewall.load_balancer_sg_id
+  security_groups_id = [module.firewall.load_balancer_sg_id]
   certificate_arn    = module.domain_name_server.existent_certificate_arn
 }
 
@@ -54,11 +54,11 @@ module "scaling" {
 
   name_prefix         = var.name_prefix
   environment         = var.environment
-  security_groups     = module.firewall.ecs_sg_id
+  security_groups     = [module.firewall.ecs_sg_id]
   vpc_zone_identifier = module.network.private_subnets
   cluster_name        = module.cluster.cluster_name
   public_key          = var.public_key
-  aws_ami_ids_name    = ["amzn-ami-*-amazon-ecs-optimized"]
+  aws_ami_ids_name    = ["amzn2-ami-*-amazon-ecs-optimized"]
 }
 
 # ==============================================================================

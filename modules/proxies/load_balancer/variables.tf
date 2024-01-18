@@ -29,7 +29,7 @@ variable "security_groups_id" {
 variable "enable_deletion_protection" {
   type = bool
   description = "value of deletion protection"
-  default = true
+  default = false
 }
 
 variable "load_balancer_type" {

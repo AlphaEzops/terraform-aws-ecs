@@ -41,7 +41,7 @@ echo ECS_INSTANCE_ATTRIBUTES={\"cluster_type\":\"web\"} >> /etc/ecs/ecs.config
 
 sudo yum install -y aws-cfn-bootstrap
 sudo yum update -y
-sudo /opt/aws/bin/cfn-init -v --stack ecs-boomi-cluster --resource ECSInstanceConfiguration --region ${AWS_REGION}
+sudo /opt/aws/bin/cfn-init -v --stack ${ECS_CLUSTER_NAME} --resource ECSInstanceConfiguration --region ${AWS_REGION}
 sudo sed -i '/After=cloud-final.service/d' /usr/lib/systemd/system/ecs.service
 sudo systemctl daemon-reload
 sudo exec 2>>/var/log/ecs-agent-reload.log

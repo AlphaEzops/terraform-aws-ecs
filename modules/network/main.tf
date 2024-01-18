@@ -18,7 +18,9 @@ module "vpc" {
   public_subnets  = [for key, value in local.azs : cidrsubnet(var.vpc_cidr, 8, key + 48)]
 
   enable_nat_gateway = true
+  single_nat_gateway = true
   enable_vpn_gateway = false
+  
   tags = var.commom_tags
 }
 

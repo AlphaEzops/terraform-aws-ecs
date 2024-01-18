@@ -37,15 +37,15 @@ output "bastion_sg_arn" {
 #===============================================================================
 output "ecs_sg_id" {
   description = "ECS security group ID"
-  value = module.bastion_sg.security_group_id
+  value = module.ecs_sg.security_group_id
 }
 
 output "ecs_sg_name" {
   description = "ECS security group name"
-  value = module.bastion_sg.security_group_name
+  value = module.ecs_sg.security_group_name
 }
 
 output "ecs_sg_arn" {
   description = "ECS security group ARN"
-  value = module.bastion_sg.security_group_arn
+  value = module.ecs_sg.security_group_arn
 }

@@ -4,13 +4,13 @@ locals {
 #===============================================================================
 # AUTO SCALING GROUP
 #===============================================================================
-resource "aws_placement_group" "this" {
-  name     = format("%s-pg", var.name_prefix)
-  strategy = "cluster"
-}
+# resource "aws_placement_group" "this" {
+#   name     = format("%s-pg", var.name_prefix)
+#   strategy = "cluster"
+# }
 
 resource "aws_autoscaling_group" "this" {
-  name                      = format("%s-asg", var.name_prefix)
+  name                      = format("%s-asg", local.name_prefix)
   max_size                  = var.max_size
   min_size                  = var.min_size
   desired_capacity          = var.desired_capacity
@@ -19,7 +19,7 @@ resource "aws_autoscaling_group" "this" {
   vpc_zone_identifier       = var.vpc_zone_identifier
   force_delete              = var.force_delete
 
-  placement_group    = aws_placement_group.this.id
+  # placement_group    = aws_placement_group.this.id
   capacity_rebalance = true
 
   metrics_granularity = "1Minute"
@@ -150,7 +150,7 @@ resource "aws_launch_template" "this" {
   }
 
   lifecycle {
-    create_before_destroy = true
+    # create_before_destroy = true
     ignore_changes = [
       tag_specifications["tags"],
     ]

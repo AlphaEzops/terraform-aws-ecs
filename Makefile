@@ -11,7 +11,7 @@ plan:
 	cd $(TF_DIR) && terraform plan -out=$(PLAN_OUTPUT) -var-file=$(VAR_DIR)/$(ENVIRONMENT).tfvars
 
 apply:
-	cd $(TF_DIR) && terraform apply $(PLAN_OUTPUT) -var-file=$(VAR_DIR)/$(ENVIRONMENT).tfvars
+	cd $(TF_DIR) && terraform apply $(PLAN_OUTPUT) 
 
 destroy:
 	cd $(TF_DIR) && terraform destroy -var-file=$(VAR_DIR)/$(ENVIRONMENT).tfvars

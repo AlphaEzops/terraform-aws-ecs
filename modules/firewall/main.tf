@@ -41,6 +41,16 @@ module "bastion_sg" {
     }
   ]
 
+  egress_with_cidr_blocks = [
+    {
+      description = "Allow all egress traffic"
+      from_port   = 0
+      to_port     = 0
+      protocol    = "-1"
+      cidr_blocks = "0.0.0.0/0"
+    }
+  ]
+
   tags = var.commom_tags
 }
 
@@ -51,12 +61,12 @@ module "ecs_sg" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "5.1.0"
 
-  name        = format("%s-ecs-sg", local.name_prefix)
-  description = "Security group for ECS"
-  vpc_id      = var.vpc_id
+  name                = format("%s-ecs-sg", local.name_prefix)
+  description         = "Security group for ECS"
+  vpc_id              = var.vpc_id
   ingress_cidr_blocks = [var.vpc_cidr_block]
 
-  computed_ingress_with_source_security_group_id = [
+  ingress_with_source_security_group_id = [
     {
       description              = "Allow ingress traffic from ALB on HTTP on ephemeral ports"
       from_port                = 32768 #1024
@@ -65,11 +75,21 @@ module "ecs_sg" {
       source_security_group_id = module.load_balancer_sg.security_group_id
     },
     {
-      description       = "Allow SSH ingress traffic from bastion host"
-      from_port         = 22
-      to_port           = 22
-      protocol          = "tcp"
-      security_group_id = module.bastion_sg.security_group_id
+      description              = "Allow SSH ingress traffic from bastion host"
+      from_port                = 22
+      to_port                  = 22
+      protocol                 = "tcp"
+      source_security_group_id = module.bastion_sg.security_group_id
+    }
+  ]
+
+  egress_with_cidr_blocks = [
+    {
+      description = "Allow all egress traffic"
+      from_port   = 0
+      to_port     = 0
+      protocol    = "-1"
+      cidr_blocks = "0.0.0.0/0"
     }
   ]
 
