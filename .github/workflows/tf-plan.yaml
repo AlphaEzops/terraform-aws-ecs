@@ -1,0 +1,37 @@
+name: Terraform Plan
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - staging
+      - main
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Environment
+        run: echo "ENVIRONMENT=dev" >> $GITHUB_ENV
+        if: github.ref == 'refs/heads/dev'
+      
+      - name: Set Environment
+        run: echo "ENVIRONMENT=staging" >> $GITHUB_ENV
+        if: github.ref == 'refs/heads/staging'
+
+      - name: Set Environment
+        run: echo "ENVIRONMENT=prod" >> $GITHUB_ENV
+        if: github.ref == 'refs/heads/main'
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Makefile Init
+        run: make -C ./terraform init
+
+      - name: Makefile Plan
+        run: make -C ./terraform plan

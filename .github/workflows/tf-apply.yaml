@@ -1,0 +1,36 @@
+name: Terraform Apply
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  terraform-apply:
+    if: |
+      github.event_name == 'pull_request' &&
+      github.event.action == 'closed' &&
+      (github.event.pull_request.base.ref == 'main' ||
+       github.event.pull_request.base.ref == 'staging' ||
+       github.event.pull_request.base.ref == 'prod')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Environment
+        run: |
+          if [ "${GITHUB_EVENT_PULL_REQUEST_BASE_REF}" == "refs/heads/main" ]; then
+            echo "ENVIRONMENT=main" >> $GITHUB_ENV
+          elif [ "${GITHUB_EVENT_PULL_REQUEST_BASE_REF}" == "refs/heads/staging" ]; then
+            echo "ENVIRONMENT=staging" >> $GITHUB_ENV
+          elif [ "${GITHUB_EVENT_PULL_REQUEST_BASE_REF}" == "refs/heads/prod" ]; then
+            echo "ENVIRONMENT=prod" >> $GITHUB_ENV
+          fi
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Makefile Apply
+        run: make -C ./terraform apply
