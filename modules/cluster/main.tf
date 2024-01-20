@@ -1,6 +1,5 @@
 locals {
-  name_prefix = format("%s-%s", var.environment, var.name_prefix)
-  ecs_name    = format("%s-%s-ecs", var.name_prefix, var.environment)
+  name_prefix = format("%s-%s", var.name_prefix, var.environment)
   execute_command_configuration = {
     logging = "OVERRIDE"
     log_configuration = {
@@ -14,7 +13,7 @@ locals {
 resource "aws_cloudwatch_log_group" "this" {
   count = var.create && var.create_cloudwatch_log_group ? 1 : 0
 
-  name              = "/aws/ecs/${local.ecs_name}"
+  name              = "/aws/ecs/${local.name_prefix}"
   retention_in_days = var.cloudwatch_log_group_retention_in_days
   kms_key_id        = var.cloudwatch_log_group_kms_key_id
 
@@ -26,7 +25,7 @@ resource "aws_cloudwatch_log_group" "this" {
 # ECS CLUSTER
 #===============================================================================
 resource "aws_ecs_cluster" "cluster" {
-  name = local.ecs_name
+  name = local.name_prefix
 
   configuration {
     execute_command_configuration {

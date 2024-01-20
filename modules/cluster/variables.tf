@@ -2,15 +2,15 @@
 # GENERAL
 ################################################################################
 variable "name_prefix" {
-  type = string
+  type        = string
   description = "The prefix for all resources"
-  default = "test"
+  default     = "test"
 }
 
 variable "environment" {
-  type = string
+  type        = string
   description = "The environment for all resources"
-  default = "dev"
+  default     = "dev"
 }
 
 variable "create" {
@@ -157,4 +157,3 @@ variable "task_exec_iam_statements" {
   type        = any
   default     = {}
 }
-

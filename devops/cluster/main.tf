@@ -2,7 +2,7 @@
 # NETWORK | VPC - SUBNETS - ROUTE TABLES - INTERNET GATEWAY - NAT GATEWAY - VPN
 # ==============================================================================
 module "network" {
-  source = "../modules/network"
+  source = "../../modules/network"
 
   name_prefix = var.name_prefix
   environment = var.environment
@@ -14,7 +14,7 @@ module "network" {
 # FIREWALL | SECURITY GROUPS
 # ==============================================================================
 module "firewall" {
-  source = "../modules/firewall"
+  source = "../../modules/firewall"
 
   name_prefix    = var.name_prefix
   environment    = var.environment
@@ -26,9 +26,9 @@ module "firewall" {
 # DNS | ROUTE 53 - CERTIFICATE MANAGER
 # ==============================================================================
 module "domain_name_server" {
-  source = "../modules/domain_name_server"
+  source = "../../modules/domain_name_server"
 
-  existent_hostzone_name   = var.existent_hostzone_name 
+  existent_hostzone_name   = var.existent_hostzone_name
   existent_acm_domain_name = var.existent_acm_domain_name
 }
 
@@ -36,7 +36,7 @@ module "domain_name_server" {
 # PROXIES | LOAD BALANCER - TARGET GROUP - LISTENER - RULES
 # ==============================================================================
 module "load_balancer" {
-  source = "../modules/proxies/load_balancer"
+  source = "../../modules/proxies/load_balancer"
 
   name_prefix        = var.name_prefix
   environment        = var.environment
@@ -50,7 +50,7 @@ module "load_balancer" {
 # SCALING | AUTOSCALING GROUP - LAUNCH CONFIGURATION
 # ==============================================================================
 module "scaling" {
-  source = "../modules/scaling"
+  source = "../../modules/scaling"
 
   name_prefix         = var.name_prefix
   environment         = var.environment
@@ -58,14 +58,14 @@ module "scaling" {
   vpc_zone_identifier = module.network.private_subnets
   cluster_name        = module.cluster.cluster_name
   public_key          = var.public_key
-  aws_ami_ids_name    = ["amzn2-ami-*-amazon-ecs-optimized"]
+  aws_ami_ids_name    = ["amzn2-ami-ecs-hvm-*-x86_64-ebs"]
 }
 
 # ==============================================================================
 # CLUSTER | ECS CLUSTER
 # ==============================================================================
 module "cluster" {
-  source = "../modules/cluster"
+  source = "../../modules/cluster"
 
   name_prefix           = var.name_prefix
   environment           = var.environment

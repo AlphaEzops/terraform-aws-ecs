@@ -1,16 +1,15 @@
-data "aws_region" "current" {}
 data "aws_availability_zones" "available" {}
 
 locals {
-  azs = slice(data.aws_availability_zones.available.names, 0, var.azs)
-  name_prefix = format("%s-%s", var.environment, var.name_prefix)
+  azs         = slice(data.aws_availability_zones.available.names, 0, var.azs)
+  name_prefix = format("%s-%s", var.name_prefix, var.environment)
 }
 
 module "vpc" {
-  source = "terraform-aws-modules/vpc/aws"
+  source  = "terraform-aws-modules/vpc/aws"
   version = "~> 5.0"
 
-  name = format("%s-vpc", local.name_prefix)
+  name = local.name_prefix
   cidr = var.vpc_cidr
 
   azs             = local.azs
@@ -20,7 +19,6 @@ module "vpc" {
   enable_nat_gateway = true
   single_nat_gateway = true
   enable_vpn_gateway = false
-  
+
   tags = var.commom_tags
 }
-

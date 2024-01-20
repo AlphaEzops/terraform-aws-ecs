@@ -1,12 +1,12 @@
 locals {
-  name_prefix = "${var.name_prefix}-${var.environment}"
+  name_prefix = format("%s-%s", var.name_prefix, var.environment)
 }
 #===============================================================================
 # LOAD BALANCER
 #===============================================================================
 resource "aws_lb" "this" {
   count                      = var.enabled ? 1 : 0
-  name                       = format("%s-elb", local.name_prefix)
+  name                       = local.name_prefix
   internal                   = var.internal
   load_balancer_type         = var.load_balancer_type
   security_groups            = var.security_groups_id

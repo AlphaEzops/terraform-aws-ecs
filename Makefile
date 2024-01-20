@@ -1,17 +1,18 @@
 # Variables
-TF_DIR := ./terraform
-PLAN_OUTPUT := plan.out
-VAR_DIR := ../vars
+TF_DIR := ./devops
+VAR_DIR := ../../vars
+SPACE := service #cluster or services
 ENVIRONMENT := dev
+PLAN_OUTPUT := plan.out
 
 init:
-	cd $(TF_DIR) && terraform init
+	cd $(TF_DIR)/$(SPACE) && terraform init
 
 plan:
-	cd $(TF_DIR) && terraform plan -out=$(PLAN_OUTPUT) -var-file=$(VAR_DIR)/$(ENVIRONMENT).tfvars
+	cd $(TF_DIR)/$(SPACE) && terraform plan -out=$(PLAN_OUTPUT) -var-file=$(VAR_DIR)/$(ENVIRONMENT).tfvars
 
 apply:
-	cd $(TF_DIR) && terraform apply $(PLAN_OUTPUT) 
+	cd $(TF_DIR)/$(SPACE) && terraform apply $(PLAN_OUTPUT) 
 
 destroy:
-	cd $(TF_DIR) && terraform destroy -var-file=$(VAR_DIR)/$(ENVIRONMENT).tfvars
+	cd $(TF_DIR)/$(SPACE) && terraform destroy -var-file=$(VAR_DIR)/$(ENVIRONMENT).tfvars

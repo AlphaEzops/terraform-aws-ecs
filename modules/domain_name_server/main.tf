@@ -43,7 +43,7 @@ resource "aws_route53_record" "acm_record_certificate_validation" {
 }
 
 resource "aws_acm_certificate_validation" "acm_certificate" {
-  count   = var.existent_acm_domain_name != null ? 0 : 1
+  count                   = var.existent_acm_domain_name != null ? 0 : 1
   certificate_arn         = aws_acm_certificate.acm_certificate[0].arn
   validation_record_fqdns = [aws_route53_record.acm_record_certificate_validation[0].fqdn]
 }
@@ -51,6 +51,6 @@ resource "aws_acm_certificate_validation" "acm_certificate" {
 # EXISTENT ACM CERTIFICATE
 #===============================================================================
 data "aws_acm_certificate" "this" {
-  count = var.existent_acm_domain_name != null ? 1 : 0
+  count  = var.existent_acm_domain_name != null ? 1 : 0
   domain = var.existent_acm_domain_name
 }

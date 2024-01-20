@@ -16,7 +16,7 @@ variable "hostzone_name" {
 variable "record_config" {
   type        = map(any)
   description = "dns route53 record config"
-  default = {}
+  default     = {}
   # default = {
   #   "name" = {
   #     name    = "value"

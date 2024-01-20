@@ -24,12 +24,6 @@ variable "public_key" {
 #==============================================================================
 # NETWORK
 #==============================================================================
-variable "vpc_name" {
-  type        = string
-  description = "The name of the VPC connection"
-  default     = "ecs"
-}
-
 variable "vpc_cidr" {
   type        = string
   description = "The CIDR block for the VPC"
@@ -54,5 +48,3 @@ variable "existent_acm_domain_name" {
   type        = string
   description = "The name of the existent certificate"
 }
-
-

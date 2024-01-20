@@ -1,53 +1,53 @@
 variable "enabled" {
-  type = bool
+  type        = bool
   description = "value of enabled module"
-  default = true
+  default     = true
 }
 
 variable "name_prefix" {
-  type = string
+  type        = string
   description = "value of name"
-  default = "demo"
+  default     = "demo"
 }
 
 variable "access_logs" {
-  type = map(any)
-  default = null
+  type        = map(any)
+  default     = null
   description = "value of access logs"
 }
 
 variable "subnets_id" {
-  type = list(string)
+  type        = list(string)
   description = "value of subnets id"
 }
 
 variable "security_groups_id" {
-  type = list(string)
+  type        = list(string)
   description = "value of security group id"
 }
 
 variable "enable_deletion_protection" {
-  type = bool
+  type        = bool
   description = "value of deletion protection"
-  default = false
+  default     = false
 }
 
 variable "load_balancer_type" {
-  type = string
+  type        = string
   description = "value of load balancer type"
-  default = "application"
+  default     = "application"
 }
 
 variable "internal" {
-  type = bool
+  type        = bool
   description = "value of internal"
-  default = false
+  default     = false
 }
 
 variable "common_tags" {
-  type = map(string)
+  type        = map(string)
   description = "value of common tags"
-  default = {}
+  default     = {}
 }
 
 variable "timeout" {
@@ -61,23 +61,23 @@ variable "timeout" {
 }
 
 variable "vpc_id" {
-  type = string
+  type        = string
   description = "value of vpc id"
 }
 
 variable "certificate_arn" {
-  type = string
+  type        = string
   description = "value of certificate arn"
 }
 
 variable "ssl_policy" {
-  type = string
+  type        = string
   description = "value of ssl policy"
-  default = "ELBSecurityPolicy-TLS-1-2-Ext-2018-06"
+  default     = "ELBSecurityPolicy-TLS-1-2-Ext-2018-06"
 }
 
 variable "environment" {
-  type = string
+  type        = string
   description = "The environment for all resources"
-  default = "dev"
+  default     = "dev"
 }

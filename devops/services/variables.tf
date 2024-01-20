@@ -36,29 +36,33 @@ variable "memory" {
 variable "container_port" {
   description = "Container port for ECS task"
   type        = number
+  default     = 80
 }
 
 variable "service_name" {
   description = "Name of the ECS service"
   type        = string
+  default     = "nginx"
 }
 
 variable "image" {
   description = "Docker image"
   type        = string
+  default     = "nginx"
 }
 
 variable "hash" {
   description = "Docker image hash"
   type        = string
+  default     = "latest"
 }
 
-variable "cluster_id" {
+variable "cluster_name" {
   description = "Name of the ECS cluster"
   type        = string
 }
 
-variable "target_group_name_arn" {
+variable "target_group_name" {
   description = "ARN of the target group"
   type        = string
 }

@@ -7,7 +7,7 @@ resource "aws_cloudfront_distribution" "default" {
   default_cache_behavior {
     allowed_methods        = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods         = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id       = aws_alb.alb.name
+    target_origin_id       = var.target_origin_id
     viewer_protocol_policy = "redirect-to-https"
 
     forwarded_values {
@@ -21,8 +21,8 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   origin {
-    domain_name = aws_alb.alb.dns_name
-    origin_id   = aws_alb.alb.name
+    domain_name = var.domain_name
+    origin_id   = var.origin_id
 
     custom_header {
       name  = "X-Custom-Header"
@@ -46,12 +46,12 @@ resource "aws_cloudfront_distribution" "default" {
   }
 
   viewer_certificate {
-    acm_certificate_arn      = aws_acm_certificate.cloudfront_certificate.arn
+    acm_certificate_arn      = var.cloudfront_certificate_arn
     minimum_protocol_version = "TLSv1.1_2016"
     ssl_support_method       = "sni-only"
   }
 
   tags = {
-    Name     = "${var.namespace}_CloudFront_${var.environment}"
+    Name = "${var.namespace}_CloudFront_${var.environment}"
   }
 }

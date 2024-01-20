@@ -1,33 +1,33 @@
 
 variable "vpc_cidr" {
-  type = string
+  type        = string
   description = "The CIDR block for the VPC"
-  default = "10.0.0.0/16"
+  default     = "10.0.0.0/16"
 }
 
 variable "azs" {
-  type = number
+  type        = number
   description = "The availability zones for the VPC"
-  default = 2
+  default     = 2
 }
 
 variable "commom_tags" {
-  type = map(string)
+  type        = map(string)
   description = "The common tags for all resources"
   default = {
-    Terraform = "true"
+    Terraform   = "true"
     Environment = "dev"
   }
 }
 
 variable "name_prefix" {
-  type = string
+  type        = string
   description = "The prefix for all resources"
-  default = "test"
+  default     = "test"
 }
 
 variable "environment" {
-  type = string
+  type        = string
   description = "The environment for all resources"
-  default = "dev"
+  default     = "dev"
 }
