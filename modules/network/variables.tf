@@ -14,10 +14,7 @@ variable "azs" {
 variable "commom_tags" {
   type        = map(string)
   description = "The common tags for all resources"
-  default = {
-    Terraform   = "true"
-    Environment = "dev"
-  }
+  default     = {}
 }
 
 variable "name_prefix" {

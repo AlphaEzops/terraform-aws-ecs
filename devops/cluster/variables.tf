@@ -13,6 +13,19 @@ variable "environment" {
   default     = "dev"
 }
 
+variable "owner" {
+  type        = string
+  description = "Owner of the resources"
+  default     = "DevOps Team"
+}
+
+variable "project" {
+  type        = string
+  description = "The project name"
+  default     = "test"
+}
+
+
 #==============================================================================
 # SCALING
 #==============================================================================

@@ -29,7 +29,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_azs"></a> [azs](#input\_azs) | The availability zones for the VPC | `number` | `2` | no |
-| <a name="input_commom_tags"></a> [commom\_tags](#input\_commom\_tags) | The common tags for all resources | `map(string)` | <pre>{<br>  "Environment": "dev",<br>  "Terraform": "true"<br>}</pre> | no |
+| <a name="input_commom_tags"></a> [commom\_tags](#input\_commom\_tags) | The common tags for all resources | `map(string)` | `{}` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The environment for all resources | `string` | `"dev"` | no |
 | <a name="input_name_prefix"></a> [name\_prefix](#input\_name\_prefix) | The prefix for all resources | `string` | `"test"` | no |
 | <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | The CIDR block for the VPC | `string` | `"10.0.0.0/16"` | no |

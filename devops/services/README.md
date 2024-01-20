@@ -39,6 +39,8 @@
 | <a name="input_hash"></a> [hash](#input\_hash) | Docker image hash | `string` | `"latest"` | no |
 | <a name="input_image"></a> [image](#input\_image) | Docker image | `string` | `"nginx"` | no |
 | <a name="input_memory"></a> [memory](#input\_memory) | Memory for ECS task | `number` | `512` | no |
+| <a name="input_owner"></a> [owner](#input\_owner) | Owner of the resources | `string` | `"DevOps Team"` | no |
+| <a name="input_project"></a> [project](#input\_project) | The project name | `string` | `"test"` | no |
 | <a name="input_service_name"></a> [service\_name](#input\_service\_name) | Name of the ECS service | `string` | `"nginx"` | no |
 | <a name="input_target_group_name"></a> [target\_group\_name](#input\_target\_group\_name) | ARN of the target group | `string` | n/a | yes |
 

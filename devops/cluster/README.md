@@ -34,6 +34,8 @@ No resources.
 | <a name="input_existent_acm_domain_name"></a> [existent\_acm\_domain\_name](#input\_existent\_acm\_domain\_name) | The name of the existent certificate | `string` | n/a | yes |
 | <a name="input_existent_hostzone_name"></a> [existent\_hostzone\_name](#input\_existent\_hostzone\_name) | The name of the existent hostzone | `string` | n/a | yes |
 | <a name="input_name_prefix"></a> [name\_prefix](#input\_name\_prefix) | The prefix for all resources | `string` | `"test"` | no |
+| <a name="input_owner"></a> [owner](#input\_owner) | Owner of the resources | `string` | `"DevOps Team"` | no |
+| <a name="input_project"></a> [project](#input\_project) | The project name | `string` | `"test"` | no |
 | <a name="input_public_key"></a> [public\_key](#input\_public\_key) | The public key to install on the instance. | `string` | n/a | yes |
 | <a name="input_vpc_cidr"></a> [vpc\_cidr](#input\_vpc\_cidr) | The CIDR block for the VPC | `string` | `"10.0.0.0/16"` | no |
 

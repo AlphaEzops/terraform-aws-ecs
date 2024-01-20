@@ -3,6 +3,18 @@ variable "environment" {
   description = "Environment for resources"
 }
 
+variable "owner" {
+  type        = string
+  description = "Owner of the resources"
+  default     = "DevOps Team"
+}
+
+variable "project" {
+  type        = string
+  description = "The project name"
+  default     = "test"
+}
+
 variable "ecs_task_desired_count" {
   description = "Desired count of ECS tasks"
   type        = number
