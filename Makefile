@@ -1,5 +1,5 @@
 TF_DIR := ./devops
-SPACE := cluster #cluster or services
+SPACE := services #cluster or services
 ENVIRONMENT := ../../dev
 PLAN_OUTPUT := plan.out
 

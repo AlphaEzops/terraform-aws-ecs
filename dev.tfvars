@@ -35,4 +35,5 @@ existent_acm_domain_name = "*.dev.ezops.com.br"
 # SERVICE
 #----------------------------------
 cluster_name      = "demo-dev"
+alb_name          = "demo-dev"
 target_group_name = "demo-dev-https-tg"

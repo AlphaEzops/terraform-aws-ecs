@@ -40,11 +40,13 @@ No modules.
 | <a name="input_ecs_task_deployment_minimum_healthy_percent"></a> [ecs\_task\_deployment\_minimum\_healthy\_percent](#input\_ecs\_task\_deployment\_minimum\_healthy\_percent) | Minimum healthy percent during ECS task deployment | `number` | `50` | no |
 | <a name="input_ecs_task_desired_count"></a> [ecs\_task\_desired\_count](#input\_ecs\_task\_desired\_count) | Desired count of ECS tasks | `number` | `1` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment for resources | `string` | n/a | yes |
+| <a name="input_environment_variables"></a> [environment\_variables](#input\_environment\_variables) | values for environment variables | `list(any)` | `[]` | no |
 | <a name="input_hash"></a> [hash](#input\_hash) | Docker image hash | `string` | n/a | yes |
 | <a name="input_image"></a> [image](#input\_image) | Docker image | `string` | n/a | yes |
 | <a name="input_memory"></a> [memory](#input\_memory) | Memory for ECS task | `number` | `512` | no |
+| <a name="input_secrets"></a> [secrets](#input\_secrets) | values for secrets | <pre>list(object({<br>    name      = string<br>    valueFrom = string<br>  }))</pre> | `[]` | no |
 | <a name="input_service_name"></a> [service\_name](#input\_service\_name) | Name of the ECS service | `string` | n/a | yes |
-| <a name="input_target_group_name_arn"></a> [target\_group\_name\_arn](#input\_target\_group\_name\_arn) | ARN of the target group | `string` | n/a | yes |
+| <a name="input_target_group_arn"></a> [target\_group\_arn](#input\_target\_group\_arn) | ARN of the target group | `string` | n/a | yes |
 
 ## Outputs
 

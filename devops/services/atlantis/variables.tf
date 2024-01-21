@@ -36,25 +36,39 @@ variable "memory" {
 variable "container_port" {
   description = "Container port for ECS task"
   type        = number
+  default     = 80
 }
 
 variable "service_name" {
   description = "Name of the ECS service"
   type        = string
+  default     = "nginx"
 }
 
 variable "image" {
   description = "Docker image"
   type        = string
+  default     = "nginx"
 }
 
 variable "hash" {
   description = "Docker image hash"
   type        = string
+  default     = "latest"
 }
 
 variable "cluster_id" {
   description = "Name of the ECS cluster"
+  type        = string
+}
+
+variable "zone_id" {
+  description = "Zone ID of the Route53 record"
+  type        = string
+}
+
+variable "zone_name" {
+  description = "Zone name of the Route53 record"
   type        = string
 }
 
@@ -63,18 +77,25 @@ variable "target_group_arn" {
   type        = string
 }
 
-variable "secrets" {
-  description = "values for secrets"
-  type = list(object({
-    name      = string
-    valueFrom = string
-  }))
-  default = []
+variable "alb_dns_name" {
+  description = "Name of the ALB"
+  type        = string
 }
 
-variable "environment_variables" {
-  description = "values for environment variables"
-  type        = list(any)
-  default     = []
+variable "atlantis_repo_allowlist" {
+  description = "Atlantis repo allowlist"
+  type        = string
+  default     = "*"
+}
 
+variable "github_token" {
+  description = "GitHub token"
+  type        = string
+  default     = null
+}
+
+variable "github_owner" {
+  description = "Atlantis repo config"
+  type        = string
+  default     = null
 }

@@ -2,14 +2,6 @@
 #===============================================================================
 # DATA SOURCES
 #===============================================================================
-# data "aws_alb_target_group" "target_group" {
-#   name = var.target_group_name
-# }
-
-# data "aws_ecs_cluster" "ecs_cluster" {
-#   cluster_name = var.cluster_id
-# }
-
 data "aws_region" "current" {}
 
 #===============================================================================
@@ -25,7 +17,7 @@ resource "aws_ecs_service" "service" {
   deployment_maximum_percent         = var.ecs_task_deployment_maximum_percent
 
   load_balancer {
-    target_group_arn = var.target_group_name_arn
+    target_group_arn = var.target_group_arn
     container_name   = var.service_name
     container_port   = var.container_port
   }
@@ -58,10 +50,11 @@ resource "aws_ecs_task_definition" "default" {
 
   container_definitions = jsonencode([
     {
-      name      = var.service_name
-      image     = "${var.image}:${var.hash}"
-      cpu       = var.cpu_units
-      memory    = var.memory
+      name   = var.service_name
+      image  = "${var.image}:${var.hash}"
+      cpu    = var.cpu_units
+      memory = var.memory
+      # memoryReservation = var.memoryReservation
       essential = true
       portMappings = [
         {
@@ -78,6 +71,20 @@ resource "aws_ecs_task_definition" "default" {
           "awslogs-stream-prefix" = "app"
         }
       }
+      secrets = [
+        for v in var.secrets :
+        {
+          name      = v.name
+          valueFrom = v.valueFrom
+        }
+      ]
+      environment = [
+        for v in var.environment_variables :
+        {
+          name  = v.name
+          value = v.value
+        }
+      ]
     }
   ])
 }
