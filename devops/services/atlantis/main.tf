@@ -6,7 +6,7 @@ resource "random_password" "webhook_secret" {
   special = false
 }
 #===============================================================================
-# GITHUB | ATLANTIS DNS
+# ROUTE53 | ATLANTIS DNS
 #===============================================================================
 resource "aws_route53_record" "this" {
   zone_id = var.zone_id

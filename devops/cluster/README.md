@@ -14,6 +14,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_bastion"></a> [bastion](#module\_bastion) | ../../modules/proxies/bastion | n/a |
 | <a name="module_cluster"></a> [cluster](#module\_cluster) | ../../modules/cluster | n/a |
 | <a name="module_domain_name_server"></a> [domain\_name\_server](#module\_domain\_name\_server) | ../../modules/domain_name_server | n/a |
 | <a name="module_firewall"></a> [firewall](#module\_firewall) | ../../modules/firewall | n/a |

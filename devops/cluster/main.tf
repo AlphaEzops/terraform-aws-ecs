@@ -45,7 +45,6 @@ module "load_balancer" {
   security_groups_id = [module.firewall.load_balancer_sg_id]
   certificate_arn    = module.domain_name_server.existent_certificate_arn
 }
-
 # ==============================================================================
 # SCALING | AUTOSCALING GROUP - LAUNCH CONFIGURATION
 # ==============================================================================
@@ -70,4 +69,19 @@ module "cluster" {
   name_prefix           = var.name_prefix
   environment           = var.environment
   autoscaling_group_arn = module.scaling.autoscaling_group_arn
+}
+# ==============================================================================
+# BASTION | EC2 INSTANCE
+# ==============================================================================
+module "bastion" {
+  source = "../../modules/proxies/bastion"
+
+  name_prefix            = var.name_prefix
+  environment            = var.environment
+  cluster_name           = module.cluster.cluster_name
+  subnet_id              = module.network.public_subnets[0]
+  public_key             = var.public_key
+  vpc_security_group_ids = [module.firewall.bastion_sg_id]
+  zone_name              = try(module.domain_name_server.existent_hostzone_name, module.domain_name_server.hostzone_name)
+  zone_id                = try(module.domain_name_server.existent_hostzone_id, module.domain_name_server.hostzone_id)
 }

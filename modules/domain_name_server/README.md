@@ -45,4 +45,8 @@ No modules.
 |------|-------------|
 | <a name="output_certificate_arn"></a> [certificate\_arn](#output\_certificate\_arn) | The ARN of the ACM certificate |
 | <a name="output_existent_certificate_arn"></a> [existent\_certificate\_arn](#output\_existent\_certificate\_arn) | The ARN of the existent ACM certificate |
+| <a name="output_existent_hostzone_id"></a> [existent\_hostzone\_id](#output\_existent\_hostzone\_id) | The ID of the existent hostzone |
+| <a name="output_existent_hostzone_name"></a> [existent\_hostzone\_name](#output\_existent\_hostzone\_name) | The name of the existent hostzone |
+| <a name="output_hostzone_id"></a> [hostzone\_id](#output\_hostzone\_id) | The ID of the hostzone |
+| <a name="output_hostzone_name"></a> [hostzone\_name](#output\_hostzone\_name) | The name of the hostzone |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

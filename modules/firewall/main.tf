@@ -33,9 +33,37 @@ module "bastion_sg" {
   # ingress_cidr_blocks = ["0.0.0.0/0"]
   ingress_with_cidr_blocks = [
     {
-      description = "Allow ingress traffic from ALB on HTTP on ephemeral ports"
-      from_port   = 22
-      to_port     = 22
+      description = "Allow SSH ingress traffic from bastion host"
+      from_port   = 3023
+      to_port     = 3023
+      protocol    = "tcp"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      description = ""
+      from_port   = 3024 #1024
+      to_port     = 3024
+      protocol    = "tcp"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      description = ""
+      from_port   = 3025 #1024
+      to_port     = 3025
+      protocol    = "tcp"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      description = ""
+      from_port   = 3080 #1024
+      to_port     = 3080
+      protocol    = "tcp"
+      cidr_blocks = "0.0.0.0/0"
+    },
+    {
+      description = ""
+      from_port   = 443 #1024
+      to_port     = 443
       protocol    = "tcp"
       cidr_blocks = "0.0.0.0/0"
     }
