@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0](https://github.com/AlphaEzops/aws-container-service/compare/v1.0.0...v1.1.0) (2024-01-20)
+
+
+### Features
+
+* Add default tags ([93c1723](https://github.com/AlphaEzops/aws-container-service/commit/93c17237f230f492d6a280ebe3dd932c8f454dfd))
+
 ## 1.0.0 (2024-01-20)
 
 
