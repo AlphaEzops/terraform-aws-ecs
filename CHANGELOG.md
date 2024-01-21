@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0](https://github.com/AlphaEzops/aws-container-service/compare/v1.1.0...v1.2.0) (2024-01-21)
+
+
+### Features
+
+* Add git modules ([db312fb](https://github.com/AlphaEzops/aws-container-service/commit/db312fba52d005db7f07f94fa32fa5881aaf7d35))
+
 ## [1.1.0](https://github.com/AlphaEzops/aws-container-service/compare/v1.0.0...v1.1.0) (2024-01-20)
 
 
