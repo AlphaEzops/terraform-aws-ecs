@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0](https://github.com/AlphaEzops/aws-container-service/compare/v1.2.0...v1.3.0) (2024-01-21)
+
+
+### Features
+
+* Add Bastion instance with goteleport ([087b8a2](https://github.com/AlphaEzops/aws-container-service/commit/087b8a25364507edf6839da4e414c59c48315be1))
+* Add git modules ([2da0df1](https://github.com/AlphaEzops/aws-container-service/commit/2da0df122ec2f19282bc87e13fc78d236ba080fc))
+
 ## [1.2.0](https://github.com/AlphaEzops/aws-container-service/compare/v1.1.0...v1.2.0) (2024-01-21)
 
 
