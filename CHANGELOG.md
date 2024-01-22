@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4.0](https://github.com/AlphaEzops/aws-container-service/compare/v1.3.0...v1.4.0) (2024-01-22)
+
+
+### Features
+
+* add sns,api_gateway,container_registry ([2ae6dfb](https://github.com/AlphaEzops/aws-container-service/commit/2ae6dfbfb6f98465caba5a1326a68ee0476f5a4b))
+
 ## [1.3.0](https://github.com/AlphaEzops/aws-container-service/compare/v1.2.0...v1.3.0) (2024-01-21)
 
 
