@@ -20,11 +20,6 @@ variable "cluster_name" {
   type        = string
 }
 
-variable "target_group_name" {
-  description = "ARN of the target group"
-  type        = string
-}
-
 variable "alb_name" {
   description = "Name of the ALB"
   type        = string
@@ -40,4 +35,9 @@ variable "hostzone_name" {
   type        = string
   description = "value of hostzone name"
   default     = null
+}
+
+variable "vpc_name" {
+  description = "Name of the VPC"
+  type        = string
 }

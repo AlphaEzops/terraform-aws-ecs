@@ -31,7 +31,6 @@ resource "aws_lb" "this" {
     delete = lookup(var.timeout, "delete", null)
   }
 }
-
 #===============================================================================
 # LOAD BALANCER TARGET GROUP HTTP
 #===============================================================================
@@ -58,7 +57,6 @@ resource "aws_lb_target_group" "http" {
 
   tags = var.common_tags
 }
-
 #===============================================================================
 # LOAD BALANCER LISTENER HTTP
 #===============================================================================
@@ -80,33 +78,6 @@ resource "aws_lb_listener" "http" {
     target_group_arn = aws_lb_target_group.http.arn
   }
 }
-
-#===============================================================================
-# LOAD BALANCER TARGET GROUP HTTPS
-#===============================================================================
-resource "aws_lb_target_group" "https" {
-  name        = format("%s-https-tg", local.name_prefix)
-  port        = 443
-  protocol    = "HTTPS"
-  target_type = "ip"
-  vpc_id      = var.vpc_id
-
-  health_check {
-    path                = "/"
-    port                = "443"
-    protocol            = "HTTPS"
-    healthy_threshold   = 2
-    unhealthy_threshold = 2
-    timeout             = 3
-    interval            = 20
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
-
-  tags = var.common_tags
-}
 #===============================================================================
 # LOAD BALANCER LISTENER HTTPS
 #===============================================================================
@@ -118,7 +89,7 @@ resource "aws_lb_listener" "https" {
   ssl_policy        = var.ssl_policy
 
   default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.https.arn
+    type = "forward"
+    # target_group_arn = aws_lb_target_group.https.arn
   }
 }

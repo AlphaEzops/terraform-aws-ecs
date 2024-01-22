@@ -36,7 +36,7 @@ variable "memory" {
 variable "container_port" {
   description = "Container port for ECS task"
   type        = number
-  default     = 80
+  default     = 4141
 }
 
 variable "service_name" {
@@ -57,31 +57,6 @@ variable "hash" {
   default     = "latest"
 }
 
-variable "cluster_id" {
-  description = "Name of the ECS cluster"
-  type        = string
-}
-
-variable "zone_id" {
-  description = "Zone ID of the Route53 record"
-  type        = string
-}
-
-variable "zone_name" {
-  description = "Zone name of the Route53 record"
-  type        = string
-}
-
-variable "target_group_arn" {
-  description = "ARN of the target group"
-  type        = string
-}
-
-variable "alb_dns_name" {
-  description = "Name of the ALB"
-  type        = string
-}
-
 variable "atlantis_repo_allowlist" {
   description = "Atlantis repo allowlist"
   type        = string
@@ -98,4 +73,31 @@ variable "github_owner" {
   description = "Atlantis repo config"
   type        = string
   default     = null
+}
+
+variable "existent_hostzone_name" {
+  type        = string
+  description = "value of existent hostzone name"
+  default     = null
+}
+
+variable "hostzone_name" {
+  type        = string
+  description = "value of hostzone name"
+  default     = null
+}
+
+variable "alb_name" {
+  description = "Name of the ALB"
+  type        = string
+}
+
+variable "vpc_name" {
+  description = "Name of the VPC"
+  type        = string
+}
+
+variable "cluster_name" {
+  description = "Name of the ECS cluster"
+  type        = string
 }

@@ -24,7 +24,6 @@ No modules.
 | [aws_lb_listener.http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
 | [aws_lb_listener.https](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_listener) | resource |
 | [aws_lb_target_group.http](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
-| [aws_lb_target_group.https](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb_target_group) | resource |
 
 ## Inputs
 
@@ -49,6 +48,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
+| <a name="output_http_listener_arn"></a> [http\_listener\_arn](#output\_http\_listener\_arn) | ARN of the listener |
 | <a name="output_http_target_group_arn"></a> [http\_target\_group\_arn](#output\_http\_target\_group\_arn) | ARN of the target group |
-| <a name="output_https_target_group_arn"></a> [https\_target\_group\_arn](#output\_https\_target\_group\_arn) | ARN of the target group |
+| <a name="output_https_listener_arn"></a> [https\_listener\_arn](#output\_https\_listener\_arn) | ARN of the listener |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

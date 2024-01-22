@@ -1,0 +1,7 @@
+# repos.yaml
+repos:
+- id: /.*/
+  # for production-server
+  repo_config_file: atlantis-production.yaml
+  # for staging-server
+  # repo_config_file: atlantis-staging.yaml

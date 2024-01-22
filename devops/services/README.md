@@ -24,10 +24,6 @@
 
 | Name | Type |
 |------|------|
-| [aws_alb.alb_name](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/alb) | data source |
-| [aws_ecs_cluster.ecs_cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ecs_cluster) | data source |
-| [aws_lb_target_group.https_target_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/lb_target_group) | data source |
-| [aws_route53_zone.zone](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone) | data source |
 | [aws_ssm_parameter.github_owner](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 | [aws_ssm_parameter.github_token](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ssm_parameter) | data source |
 
@@ -42,7 +38,7 @@
 | <a name="input_hostzone_name"></a> [hostzone\_name](#input\_hostzone\_name) | value of hostzone name | `string` | `null` | no |
 | <a name="input_owner"></a> [owner](#input\_owner) | Owner of the resources | `string` | `"DevOps Team"` | no |
 | <a name="input_project"></a> [project](#input\_project) | The project name | `string` | `"test"` | no |
-| <a name="input_target_group_name"></a> [target\_group\_name](#input\_target\_group\_name) | ARN of the target group | `string` | n/a | yes |
+| <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | Name of the VPC | `string` | n/a | yes |
 
 ## Outputs
 
