@@ -1,57 +1,62 @@
-## Table of Contents
+<h1 align="center"> Container Orchestration System <h1>
+<br/>
 
-- [Introduction](#introduction)
-- [Module 1: VPC](#module-1-vpc)
-- [Module 2: ECS Cluster](#module-2-ecs-cluster)
-- [Module 3: RDS Database](#module-3-rds-database)
-- [Module 4: CDN](#module-4-cdn)
-- [Module 5: DNS](#module-5-dns)
-- [Module 6: Firewall](#module-6-firewall)
-- [Module 7: Proxies](#module-7-proxies)
-- [Module 8: Scaling](#module-8-scaling)
-- [Module 9: Service](#module-9-service)
-- [Conclusion](#conclusion)
+![](docs/assets/opentofu.png)
+  
+![GitHub license](https://img.shields.io/github/license/AlphaEzops/aws-container-service?style=for-the-badge)
+![Terraform](https://img.shields.io/badge/terraform-%235835CC.svg?style=for-the-badge&logo=terraform&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
+
+<br/>
+<br/>
+
+- [**Introduction**](#introduction)
+- [**Requirements Tools**](#requirements-tools)
+- [**Optional Tools**](#optional-tools)
+- [**Usage**](#usage)
+- [**Pull Requests**](#pull-requests)
+- [**Issues**](#issues)
 
 ## Introduction
+This project is a container orchestration system, that is using AWS ECS and we adding EKS  in Future.
 
-This README provides an overview of the Terraform modules created for the ECS cluster project.
+## Requirements
+you need install all the tools below:
+- [opentofu](./docs/requirements/opentofu.md) - tools for provisioning and managing cloud infrastructure 
+- [aws cli](./docs/requirements/aws-cli.md) - command-line tool for AWS 
 
-## Module 1: VPC
+## Optional Tools
+- [aws-vault](./docs/requirements/aws-vault.md) - a tool to securely store and access AWS credentials in a development environment
+- [pre-commit](./docs/requirements/pre-commit.md) - a framework for managing and maintaining multi-language pre-commit hooks
+- [tflint](./docs/requirements/tflint.md) - a Terraform linter for detecting errors that can not be detected by terraform plan
+- [terraform-docs](./docs/requirements/terraform-docs.md) - a tool to generate documentation from Terraform modules in various output formats
 
-This module sets up the Virtual Private Cloud (VPC) for the ECS cluster.
+## Usage
+To use this project, follow these steps:
+1. Clone this repository:
+```bash
+git clone git@github.com:AlphaEzops/aws-container-service.git
+```
+2. Set AWS credentials as environment variables:
+```bash
+aws-vault exec <profile> -- env | grep AWS
+```
+3. Initialize Terraform:
+```bash
+make init
+```
+4. Create a Terraform plan:
+```bash
+make plan
+```
+5. Apply the Terraform plan:
+```bash
+make apply
+```
 
-## Module 2: ECS Cluster
+## Pull Requests
+If you find a bug or want to add an improvement to this project, feel free to open a pull request.
 
-This module provisions the ECS cluster and associated resources.
-
-## Module 3: RDS Database
-
-This module creates an RDS database instance for the ECS cluster.
-
-## Module 4: CDN
-
-This module configures a Content Delivery Network (CDN) for the ECS cluster.
-
-## Module 5: DNS
-
-This module manages the DNS configuration for the ECS cluster.
-
-## Module 6: Firewall
-
-This module sets up a firewall for the ECS cluster.
-
-## Module 7: Proxies
-
-This module configures proxies for the ECS cluster.
-
-## Module 8: Scaling
-
-This module handles the scaling of resources for the ECS cluster.
-
-## Module 9: Service
-
-This module manages the services running on the ECS cluster.
-
-## Conclusion
-
-In this project, we have created several Terraform modules to set up and manage the ECS cluster infrastructure.
+## Issues
+If you have any questions or difficulties with this project, please open an issue.
