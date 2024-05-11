@@ -12,7 +12,7 @@ module "github_repository_webhooks" {
   source = "../../../modules/git_repository/github/webhook"
 
   repositories   = ["*"]
-  webhook_url    = format("%s.%s/events", "atlantis", try(var.existent_hostzone_name, var.hostzone_name))
+  webhook_url    = "atlantis.${var.existent_hostzone_name}/events"
   webhook_secret = random_password.webhook_secret.result
 }
 
