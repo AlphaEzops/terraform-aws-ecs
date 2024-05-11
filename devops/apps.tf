@@ -1,18 +1,8 @@
 #===============================================================================
-# DATA SOURCES
-#===============================================================================
-data "aws_ssm_parameter" "github_token" {
-  name = format("/%s/GH/TOKEN", upper(var.environment))
-}
-data "aws_ssm_parameter" "github_owner" {
-  name = format("/%s/GH/OWNER", upper(var.environment))
-}
-
-#===============================================================================
 # SERVICES
 #===============================================================================
 module "atlantis" {
-  source                 = "./atlantis"
+  source                 = "./services/atlantis"
   github_token           = data.aws_ssm_parameter.github_token.value
   github_owner           = data.aws_ssm_parameter.github_owner.value
   environment            = var.environment
