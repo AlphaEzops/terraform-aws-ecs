@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0](https://github.com/AlphaEzops/terraform-aws-ecs/compare/v1.4.0...v1.5.0) (2024-05-11)
+
+
+### Features
+
+* add useful functions on makefile ([f50bf8e](https://github.com/AlphaEzops/terraform-aws-ecs/commit/f50bf8e3a2c4975bef1160eccccdb81167b384d0))
+* join state file ([b12a9ca](https://github.com/AlphaEzops/terraform-aws-ecs/commit/b12a9ca33e187914ca81c526a9928d7354961431))
+* join state file ([6e940eb](https://github.com/AlphaEzops/terraform-aws-ecs/commit/6e940eb7217b6823d5f8f58772e9775195d4c2a0))
+
 ## [1.4.0](https://github.com/AlphaEzops/aws-container-service/compare/v1.3.0...v1.4.0) (2024-01-22)
 
 
