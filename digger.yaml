@@ -1,6 +1,0 @@
-projects:
-- name: production
-  dir: prod
-
-generate_projects:
-  include: "./devops/*"
