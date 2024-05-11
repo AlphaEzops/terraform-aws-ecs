@@ -1,18 +1,22 @@
 name: Terraform Workflow Demo
-
 on:
   push:
-    branches: [ "main" ]
-    paths:
-      - 'devops/**'
-      - 'modules/**'
-      - '.github/workflows/terraform_ci.yaml'
-  pull_request:
-    branches: [ "main" ]
-    paths:
-      - 'devops/**'
-      - 'modules/**'
-      - '.github/workflows/terraform_ci.yaml'
+    branches:
+    - any
+
+# on:
+#   push:
+#     branches: [ "main" ]
+#     paths:
+#       - 'devops/**'
+#       - 'modules/**'
+#       - '.github/workflows/terraform_ci.yaml'
+#   pull_request:
+#     branches: [ "main" ]
+#     paths:
+#       - 'devops/**'
+#       - 'modules/**'
+#       - '.github/workflows/terraform_ci.yaml'
 
 jobs:
   terraform:
