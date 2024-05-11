@@ -78,7 +78,6 @@ variable "github_owner" {
 variable "existent_hostzone_name" {
   type        = string
   description = "value of existent hostzone name"
-  default     = null
 }
 
 variable "hostzone_name" {
