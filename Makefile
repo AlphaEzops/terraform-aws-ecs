@@ -1,31 +1,36 @@
 TF_DIR := ./devops
 ENVIRONMENT := dev
 PLAN_OUTPUT := plan.out
-TERRAFORM_OR_OPENTOFU := terraform
+TF_BUCKET := project-2024-terraform-state
 
 #===============================================================================
 # INFRA AS CODE
 #===============================================================================
 init: ## Initialize terraform
-	@cd $(TF_DIR) && $(TERRAFORM_OR_OPENTOFU) init
+	@cd $(TF_DIR) && terraform init \
+		-backend-config="bucket=$(TF_BUCKET)" \
+		-backend-config="key=terraform.tfstate" \
+		-backend-config="encrypt=true"
 
 plan: ## Create a terraform plan
-	@cd $(TF_DIR) && $(TERRAFORM_OR_OPENTOFU) plan -out=$(PLAN_OUTPUT) -var-file=./vars/$(ENVIRONMENT).tfvars
+	@cd $(TF_DIR) && terraform plan -out=$(PLAN_OUTPUT) -var-file=./vars/$(ENVIRONMENT).tfvars
 
 show: ## Show the terraform plan
-	@cd $(TF_DIR) && $(TERRAFORM_OR_OPENTOFU) show -json $(PLAN_OUTPUT) >> $(PLAN_OUTPUT).json
+	@cd $(TF_DIR) && terraform show -json $(PLAN_OUTPUT) >> $(PLAN_OUTPUT).json
 
-apply: ## Apply the terraform plan
-	@cd $(TF_DIR) && $(TERRAFORM_OR_OPENTOFU) apply $(PLAN_OUTPUT) 
+apply: ## Apply the terraform apply
+	@cd $(TF_DIR) && terraform apply $(PLAN_OUTPUT)
 
-destroy: ## Destroy the terraform plan
-	@cd $(TF_DIR) && $(TERRAFORM_OR_OPENTOFU) destroy -var-file=./vars/$(ENVIRONMENT).tfvars
+apply_auto_aprove: ## Apply the terraform plan with auto approve
+	@cd $(TF_DIR) && terraform apply $(PLAN_OUTPUT) -auto-approve -input=false
+
+destroy: ## Destroy the terraform infra
+	@cd $(TF_DIR) && terraform destroy -var-file=./vars/$(ENVIRONMENT).tfvars
 
 #===============================================================================
 # SET ENVIRONMENT
 #===============================================================================
-get_current_info:
-	@echo "IaC type: $(TERRAFORM_OR_OPENTOFU)" 
+get_current_info: ## Get the current value of the ENVIRONMENT variable
 	@echo "Environment: $(ENVIRONMENT)"
 
 set_terraform_type: ## SET the value of Terraform type
