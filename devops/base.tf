@@ -85,13 +85,3 @@ module "bastion" {
   zone_name              = module.domain_name_server.existent_hostzone_name #try(, module.domain_name_server.hostzone_name)
   zone_id                = module.domain_name_server.extistent_zone_id      #try(module.domain_name_server.existent_hostzone_id, module.domain_name_server.hostzone_id)
 }
-
-#===============================================================================
-# DATA SOURCES
-#===============================================================================
-data "aws_ssm_parameter" "github_token" {
-  name = format("/%s/GH/TOKEN", upper(var.environment))
-}
-data "aws_ssm_parameter" "github_owner" {
-  name = format("/%s/GH/OWNER", upper(var.environment))
-}

@@ -61,28 +61,3 @@ variable "existent_acm_domain_name" {
   type        = string
   description = "The name of the existent certificate"
 }
-
-#===============================================================================
-# SERVICES
-#===============================================================================
-
-variable "cluster_name" {
-  description = "Name of the ECS cluster"
-  type        = string
-}
-
-variable "alb_name" {
-  description = "Name of the ALB"
-  type        = string
-}
-
-variable "hostzone_name" {
-  type        = string
-  description = "value of hostzone name"
-  default     = null
-}
-
-variable "vpc_name" {
-  description = "Name of the VPC"
-  type        = string
-}

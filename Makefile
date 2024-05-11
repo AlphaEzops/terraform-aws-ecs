@@ -10,7 +10,7 @@ init: ## Initialize terraform
 	@cd $(TF_DIR) && $(TERRAFORM_OR_OPENTOFU) init
 
 plan: ## Create a terraform plan
-	@cd $(TF_DIR) && $(TERRAFORM_OR_OPENTOFU) plan -out=$(PLAN_OUTPUT) -var-file=../vars/$(ENVIRONMENT).tfvars
+	@cd $(TF_DIR) && $(TERRAFORM_OR_OPENTOFU) plan -out=$(PLAN_OUTPUT) -var-file=./vars/$(ENVIRONMENT).tfvars
 
 show: ## Show the terraform plan
 	@cd $(TF_DIR) && $(TERRAFORM_OR_OPENTOFU) show -json $(PLAN_OUTPUT) >> $(PLAN_OUTPUT).json
@@ -19,7 +19,7 @@ apply: ## Apply the terraform plan
 	@cd $(TF_DIR) && $(TERRAFORM_OR_OPENTOFU) apply $(PLAN_OUTPUT) 
 
 destroy: ## Destroy the terraform plan
-	@cd $(TF_DIR) && $(TERRAFORM_OR_OPENTOFU) destroy -var-file=../vars/$(ENVIRONMENT).tfvars
+	@cd $(TF_DIR) && $(TERRAFORM_OR_OPENTOFU) destroy -var-file=./vars/$(ENVIRONMENT).tfvars
 
 #===============================================================================
 # SET ENVIRONMENT

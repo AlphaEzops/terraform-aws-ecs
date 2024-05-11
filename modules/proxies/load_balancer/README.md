@@ -42,5 +42,6 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_alb_arn"></a> [alb\_arn](#output\_alb\_arn) | ARN of the target group |
+| <a name="output_alb_arn"></a> [alb\_arn](#output\_alb\_arn) | ARN of the Application Load Balancer |
+| <a name="output_alb_name"></a> [alb\_name](#output\_alb\_name) | Name of the Application Load Balancer |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
