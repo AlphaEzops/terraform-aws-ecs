@@ -1,15 +1,16 @@
 #===============================================================================
 # HTTP
 #===============================================================================
-output "http_target_group_arn" {
+output "alb_arn" {
   description = "ARN of the target group"
-  value       = aws_lb_target_group.http.arn
+  value       = aws_lb.this[*].arn
 }
 
-output "http_listener_arn" {
-  description = "ARN of the listener"
-  value       = aws_lb_listener.http.arn
-}
+# output "http_listener_arn" {
+#   description = "ARN of the listener"
+#   value       = aws_lb_listener.http.arn
+# }
+
 #===============================================================================
 # HTTPS
 #===============================================================================
@@ -18,7 +19,7 @@ output "http_listener_arn" {
 #   value       = aws_lb_target_group.https.arn
 # }
 
-output "https_listener_arn" {
-  description = "ARN of the listener"
-  value       = aws_lb_listener.https.arn
-}
+# output "https_listener_arn" {
+#   description = "ARN of the listener"
+#   value       = aws_lb_listener.https.arn
+# }

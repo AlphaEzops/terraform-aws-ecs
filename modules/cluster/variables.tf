@@ -10,7 +10,7 @@ variable "name_prefix" {
 variable "environment" {
   type        = string
   description = "The environment for all resources"
-  default     = "dev"
+  # default     = "dev"
 }
 
 variable "create" {

@@ -113,11 +113,22 @@ variable "target_group" {
   }
 }
 
-variable "alb_listener_port" {
-  description = "Port of the ALB listener"
-  type        = number
-  default     = 443
+variable "certificate_arn" {
+  type        = string
+  description = "value of certificate arn"
 }
+
+variable "ssl_policy" {
+  type        = string
+  description = "value of ssl policy"
+  default     = "ELBSecurityPolicy-TLS-1-2-Ext-2018-06"
+}
+
+# variable "alb_listener_port" {
+#   description = "Port of the ALB listener"
+#   type        = number
+#   default     = 443
+# }
 
 variable "priority" {
   description = "Priority of the ALB listener rule"

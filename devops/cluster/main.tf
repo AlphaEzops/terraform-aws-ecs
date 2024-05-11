@@ -38,12 +38,12 @@ module "domain_name_server" {
 module "load_balancer" {
   source = "../../modules/proxies/load_balancer"
 
-  name_prefix        = var.name_prefix
-  environment        = var.environment
-  vpc_id             = module.network.vpc_id
+  name_prefix = var.name_prefix
+  environment = var.environment
+  # vpc_id             = module.network.vpc_id
   subnets_id         = module.network.public_subnets
   security_groups_id = [module.firewall.load_balancer_sg_id]
-  certificate_arn    = module.domain_name_server.existent_certificate_arn
+  # certificate_arn    = module.domain_name_server.existent_certificate_arn
 }
 # ==============================================================================
 # SCALING | AUTOSCALING GROUP - LAUNCH CONFIGURATION
@@ -82,6 +82,6 @@ module "bastion" {
   subnet_id              = module.network.public_subnets[0]
   public_key             = var.public_key
   vpc_security_group_ids = [module.firewall.bastion_sg_id]
-  zone_name              = try(module.domain_name_server.existent_hostzone_name, module.domain_name_server.hostzone_name)
-  zone_id                = try(module.domain_name_server.existent_hostzone_id, module.domain_name_server.hostzone_id)
+  zone_name              = module.domain_name_server.existent_hostzone_name #try(, module.domain_name_server.hostzone_name)
+  zone_id                = module.domain_name_server.extistent_zone_id      #try(module.domain_name_server.existent_hostzone_id, module.domain_name_server.hostzone_id)
 }

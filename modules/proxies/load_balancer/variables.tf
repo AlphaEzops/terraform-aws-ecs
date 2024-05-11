@@ -60,21 +60,21 @@ variable "timeout" {
   }
 }
 
-variable "vpc_id" {
-  type        = string
-  description = "value of vpc id"
-}
+# variable "vpc_id" {
+#   type        = string
+#   description = "value of vpc id"
+# }
 
-variable "certificate_arn" {
-  type        = string
-  description = "value of certificate arn"
-}
+# variable "certificate_arn" {
+#   type        = string
+#   description = "value of certificate arn"
+# }
 
-variable "ssl_policy" {
-  type        = string
-  description = "value of ssl policy"
-  default     = "ELBSecurityPolicy-TLS-1-2-Ext-2018-06"
-}
+# variable "ssl_policy" {
+#   type        = string
+#   description = "value of ssl policy"
+#   default     = "ELBSecurityPolicy-TLS-1-2-Ext-2018-06"
+# }
 
 variable "environment" {
   type        = string

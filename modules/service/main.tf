@@ -1,4 +1,3 @@
-
 #===============================================================================
 # DATA SOURCES
 #===============================================================================
@@ -10,26 +9,11 @@ data "aws_ecs_cluster" "current" {
 data "aws_alb" "current" {
   name = var.alb_name
 }
-data "aws_vpc" "current" {
-  id = var.vpc_name
-}
-data "aws_lb_listener" "https_listener" {
-  load_balancer_arn = data.aws_alb.current.arn
-  port              = var.alb_listener_port
-}
 data "aws_route53_zone" "zone" {
   name = try(var.existent_hostzone_name, var.hostzone_name)
 }
-
-#===============================================================================
-# ROUTE53 | ATLANTIS DNS
-#===============================================================================
-resource "aws_route53_record" "this" {
-  zone_id = data.aws_route53_zone.zone.zone_id
-  name    = "atlantis.${data.aws_route53_zone.zone.name}"
-  type    = "CNAME"
-  ttl     = 300
-  records = [data.aws_alb.current.dns_name]
+data "aws_vpc" "current" {
+  id = var.vpc_name
 }
 #===============================================================================
 # LOAD BALANCER TARGET GROUP HTTPS
@@ -56,10 +40,46 @@ resource "aws_lb_target_group" "target_group" {
   }
 }
 #===============================================================================
+# LOAD BALANCER LISTENER HTTP
+#===============================================================================
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = data.aws_alb.current.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+      host        = "#{host}"
+      path        = "/#{path}"
+      query       = "#{query}"
+    }
+  }
+}
+
+#===============================================================================
+# LOAD BALANCER LISTENER HTTPS
+#===============================================================================
+resource "aws_lb_listener" "https" {
+  load_balancer_arn = data.aws_alb.current.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn   = var.certificate_arn
+  ssl_policy        = var.ssl_policy
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.target_group.arn
+  }
+}
+#===============================================================================
 # LISTENER RULES
 #===============================================================================
 resource "aws_lb_listener_rule" "https_listener_rule" {
-  listener_arn = data.aws_lb_listener.https_listener.arn
+  listener_arn = aws_lb_listener.https.arn
   priority     = var.priority
   action {
     type             = "forward"
@@ -86,6 +106,23 @@ resource "aws_lb_listener_rule" "https_listener_rule" {
     }
   }
 }
+
+#===============================================================================
+# ROUTE53 RECORD
+#===============================================================================
+locals {
+  prod_stage   = format("%s-%s-%s", var.service_name, data.aws_route53_zone.zone.name)
+  other_stage  = format("%s-%s-%s", var.service_name, var.environment, data.aws_route53_zone.zone.name)
+  records_name = var.environment == "prod" ? local.prod_stage : local.other_stage
+}
+resource "aws_route53_record" "this" {
+  zone_id = data.aws_route53_zone.zone.zone_id
+  name    = local.records_name
+  type    = "CNAME"
+  ttl     = 300
+  records = [data.aws_alb.current.dns_name]
+}
+
 #===============================================================================
 # SERVICE
 #===============================================================================

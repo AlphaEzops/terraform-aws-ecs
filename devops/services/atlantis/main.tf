@@ -20,8 +20,8 @@ module "github_repository_webhooks" {
 # SERVICE | ATLANTIS
 #===============================================================================
 module "service" {
-  source = "../../../modules/service"
-
+  source                                      = "../../../modules/service"
+  certificate_arn                             = ""
   environment                                 = var.environment
   service_name                                = var.service_name
   cluster_name                                = var.cluster_name

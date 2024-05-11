@@ -8,7 +8,7 @@ project     = "unknown"
 #----------------------------------
 # NETWORK
 #----------------------------------
-vpc_name = "demo-dev"
+# vpc_name = "demo-dev"
 vpc_cidr = "10.0.0.0/16"
 azs      = 3
 #----------------------------------
@@ -35,6 +35,6 @@ existent_acm_domain_name = "*.dev.ezops.com.br"
 #----------------------------------
 # SERVICE
 #----------------------------------
-cluster_name      = "demo-dev"
-alb_name          = "demo-dev"
-target_group_name = "demo-dev-https-tg"
+# cluster_name      = "demo-dev"
+# alb_name          = "demo-dev"
+# target_group_name = "demo-dev-https-tg"

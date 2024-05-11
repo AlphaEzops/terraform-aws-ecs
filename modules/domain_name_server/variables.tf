@@ -7,11 +7,11 @@ variable "existent_hostzone_name" {
   default     = null
 }
 
-variable "hostzone_name" {
-  type        = string
-  description = "value of hostzone name"
-  default     = null
-}
+# variable "hostzone_name" {
+#   type        = string
+#   description = "value of hostzone name"
+#   default     = null
+# }
 
 variable "record_config" {
   type        = map(any)
@@ -31,16 +31,4 @@ variable "existent_acm_domain_name" {
   type        = string
   description = "value of existent acm domain name"
   default     = null
-}
-
-variable "acm_domain_name" {
-  type        = string
-  description = "value of acm domain name"
-  default     = null
-}
-
-variable "common_tags" {
-  type        = map(string)
-  description = "value of common tags"
-  default     = {}
 }
