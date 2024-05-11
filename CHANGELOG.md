@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6.0](https://github.com/AlphaEzops/terraform-aws-ecs/compare/v1.5.0...v1.6.0) (2024-05-11)
+
+
+### Features
+
+* add workflow terraform ci ([7c87ad0](https://github.com/AlphaEzops/terraform-aws-ecs/commit/7c87ad0c8aa8317d7d1a67820edf2a82c9a2464f))
+* add workflow terraform ci ([82568bc](https://github.com/AlphaEzops/terraform-aws-ecs/commit/82568bc0445bd029c572c4b0325fb3e814e381c2))
+
 ## [1.5.0](https://github.com/AlphaEzops/terraform-aws-ecs/compare/v1.4.0...v1.5.0) (2024-05-11)
 
 
