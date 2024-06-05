@@ -23,5 +23,4 @@ module "atlantis" {
   environment            = var.environment
   existent_hostzone_name = var.existent_hostzone_name
   hostzone_name          = module.domain_name_server.existent_hostzone_name
-
 }

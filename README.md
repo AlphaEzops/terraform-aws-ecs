@@ -42,15 +42,29 @@ git clone git@github.com:AlphaEzops/aws-container-service.git
 ```bash
 aws-vault exec <profile> -- env | grep AWS
 ```
-3. Initialize Terraform:
+3. Set Opentofu Variables:
+```yaml
+Set devops/vars/dev.yaml for dev environment
+Set devops/vars/prod.yaml for prod environment
+Set devops/vars/staging.yaml for stage environment
+```
+4. : Setup the project:
+```bash
+make setup
+```
+5. Set environment 
+```bash
+make set_environment
+```
+6. Initialize the Terraform project
 ```bash
 make init
 ```
-4. Create a Terraform plan:
+7. Create a Terraform plan:
 ```bash
 make plan
 ```
-5. Apply the Terraform plan:
+8. Apply the Terraform plan:
 ```bash
 make apply
 ```
