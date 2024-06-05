@@ -86,17 +86,22 @@ variable "hostzone_name" {
   default     = null
 }
 
-variable "alb_name" {
-  description = "Name of the ALB"
+variable "alb_arn" {
+  description = "ARN of the ALB"
   type        = string
 }
 
-variable "vpc_name" {
+variable "vpc_id" {
   description = "Name of the VPC"
   type        = string
 }
 
 variable "cluster_name" {
   description = "Name of the ECS cluster"
+  type        = string
+}
+
+variable "dns_name" {
+  description = "DNS name of the ALB"
   type        = string
 }

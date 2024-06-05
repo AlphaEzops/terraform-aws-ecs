@@ -9,7 +9,7 @@ provider "aws" {
   }
 }
 
-provider "github" {
-  token = data.aws_ssm_parameter.github_token.value
-  owner = data.aws_ssm_parameter.github_owner.value
-}
+# provider "github" {
+#   token = data.aws_ssm_parameter.github_token.value
+#   owner = data.aws_ssm_parameter.github_owner.value
+# }

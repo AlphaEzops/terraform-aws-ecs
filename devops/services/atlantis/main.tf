@@ -25,8 +25,9 @@ module "service" {
   environment                                 = var.environment
   service_name                                = var.service_name
   cluster_name                                = var.cluster_name
-  alb_name                                    = var.alb_name
-  vpc_name                                    = var.vpc_name
+  dns_name                                    = var.dns_name
+  alb_arn                                     = var.alb_arn
+  vpc_id                                      = var.vpc_id
   existent_hostzone_name                      = var.existent_hostzone_name
   hostzone_name                               = var.hostzone_name
   image                                       = var.image

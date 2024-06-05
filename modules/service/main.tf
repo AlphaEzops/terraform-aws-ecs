@@ -3,17 +3,8 @@
 #===============================================================================
 data "aws_region" "current" {}
 
-data "aws_ecs_cluster" "current" {
-  cluster_name = var.cluster_name
-}
-data "aws_alb" "current" {
-  name = var.alb_name
-}
 data "aws_route53_zone" "zone" {
   name = try(var.existent_hostzone_name, var.hostzone_name)
-}
-data "aws_vpc" "current" {
-  id = var.vpc_name
 }
 #===============================================================================
 # LOAD BALANCER TARGET GROUP HTTPS
@@ -23,7 +14,7 @@ resource "aws_lb_target_group" "target_group" {
   port        = var.target_group.port
   protocol    = var.target_group.protocol
   target_type = var.target_group.target_type
-  vpc_id      = data.aws_vpc.current.id
+  vpc_id      = var.vpc_id
 
   health_check {
     path                = var.target_group.health_check.path
@@ -43,7 +34,7 @@ resource "aws_lb_target_group" "target_group" {
 # LOAD BALANCER LISTENER HTTP
 #===============================================================================
 resource "aws_lb_listener" "http" {
-  load_balancer_arn = data.aws_alb.current.arn
+  load_balancer_arn = var.alb_arn 
   port              = "80"
   protocol          = "HTTP"
 
@@ -64,7 +55,7 @@ resource "aws_lb_listener" "http" {
 # LOAD BALANCER LISTENER HTTPS
 #===============================================================================
 resource "aws_lb_listener" "https" {
-  load_balancer_arn = data.aws_alb.current.arn
+  load_balancer_arn =  var.alb_arn #data.aws_alb.current.arn
   port              = "443"
   protocol          = "HTTPS"
   certificate_arn   = var.certificate_arn
@@ -111,16 +102,16 @@ resource "aws_lb_listener_rule" "https_listener_rule" {
 # ROUTE53 RECORD
 #===============================================================================
 locals {
-  prod_stage   = format("%s-%s-%s", var.service_name, data.aws_route53_zone.zone.name)
+  prod_stage   = format("%s-%s", var.service_name, data.aws_route53_zone.zone.name)
   other_stage  = format("%s-%s-%s", var.service_name, var.environment, data.aws_route53_zone.zone.name)
   records_name = var.environment == "prod" ? local.prod_stage : local.other_stage
 }
 resource "aws_route53_record" "this" {
-  zone_id = data.aws_route53_zone.zone.zone_id
+  zone_id = var.hostzone_name #data.aws_route53_zone.zone.zone_id
   name    = local.records_name
   type    = "CNAME"
   ttl     = 300
-  records = [data.aws_alb.current.dns_name]
+  records = [var.dns_name]
 }
 
 #===============================================================================
@@ -129,7 +120,7 @@ resource "aws_route53_record" "this" {
 resource "aws_ecs_service" "service" {
   name                               = "${var.service_name}_${var.environment}"
   iam_role                           = aws_iam_role.ecs_task_iam_role.arn
-  cluster                            = data.aws_ecs_cluster.current.id
+  cluster                            = var.cluster_name #data.aws_ecs_cluster.current.id
   task_definition                    = aws_ecs_task_definition.default.arn
   desired_count                      = var.ecs_task_desired_count
   deployment_minimum_healthy_percent = var.ecs_task_deployment_minimum_healthy_percent
@@ -164,7 +155,7 @@ resource "aws_ecs_service" "service" {
 #===============================================================================
 resource "aws_ecs_task_definition" "default" {
   family             = "${var.service_name}_ECS_TaskDefinition_${var.environment}"
-  execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
+  execution_role_arn = aws_iam_role.ecs_execution_iam_role.arn
   task_role_arn      = aws_iam_role.ecs_task_iam_role.arn
   network_mode       = "awsvpc"
 
@@ -215,14 +206,10 @@ resource "aws_cloudwatch_log_group" "log_group" {
   name              = "/${lower(var.environment)}/ECS/${lower(var.service_name)}"
   retention_in_days = 7
 }
-#===============================================================================
-# AWS IAM ROLE
-#===============================================================================
-resource "aws_iam_role" "ecs_task_execution_role" {
-  name               = "${var.environment}_ECS_TaskExecutionRole_${var.service_name}"
-  assume_role_policy = data.aws_iam_policy_document.task_assume_role_policy.json
-}
 
+#===============================================================================
+# AWS IAM ROLE - TASK ROLE
+#===============================================================================
 data "aws_iam_policy_document" "task_assume_role_policy" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -234,12 +221,36 @@ data "aws_iam_policy_document" "task_assume_role_policy" {
   }
 }
 
-resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
-  role       = aws_iam_role.ecs_task_execution_role.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
-}
-
 resource "aws_iam_role" "ecs_task_iam_role" {
   name               = "${var.environment}_ECS_TaskIAMRole_${var.service_name}"
   assume_role_policy = data.aws_iam_policy_document.task_assume_role_policy.json
+}
+
+#===============================================================================
+# AWS IAM ROLE - EXECUTION ROLE
+#===============================================================================
+data "aws_iam_policy_document" "execution_assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ecs.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role" "ecs_execution_iam_role" {
+  name               = "${var.environment}_ECS_TaskExecutionRole_${var.service_name}"
+  assume_role_policy = data.aws_iam_policy_document.execution_assume_role_policy.json
+  
+  # inline_policy {
+  #   name = "ecs_execution_role_policy"
+  #   policy = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+  # }
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
+  role       = aws_iam_role.ecs_execution_iam_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }

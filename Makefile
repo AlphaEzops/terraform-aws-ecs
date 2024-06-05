@@ -1,7 +1,8 @@
 TF_DIR := ./devops
 ENVIRONMENT := dev
 PLAN_OUTPUT := plan.out
-TF_BUCKET := project-2024-terraform-state
+TF_BUCKET := alpha-team-ezops
+TF_KEY := test/terraform.tfstate
 
 #===============================================================================
 # INFRA AS CODE
@@ -9,7 +10,7 @@ TF_BUCKET := project-2024-terraform-state
 init: ## Initialize terraform
 	@cd $(TF_DIR) && terraform init \
 		-backend-config="bucket=$(TF_BUCKET)" \
-		-backend-config="key=terraform.tfstate" \
+		-backend-config="key=$(TF_KEY)" \
 		-backend-config="encrypt=true"
 
 plan: ## Create a terraform plan
