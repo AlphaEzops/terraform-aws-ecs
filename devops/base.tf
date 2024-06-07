@@ -3,7 +3,6 @@
 # ==============================================================================
 module "network" {
   source = "../modules/network"
-
   name_prefix = var.name_prefix
   environment = var.environment
   vpc_cidr    = var.vpc_cidr

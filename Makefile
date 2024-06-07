@@ -1,7 +1,7 @@
 TF_DIR := ./devops
 ENVIRONMENT := dev
 PLAN_OUTPUT := plan.out
-TF_BUCKET := test
+TF_BUCKET := alpha-team-ezops
 TF_KEY := $(ENVIRONMENT)/terraform.tfstate
 
 #===============================================================================
